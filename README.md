@@ -14,5 +14,7 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 * Aiheiden määrittely, muokkaus ja poisto
 
 Sovellus Herokussa: https://foorumi-tsoha.herokuapp.com/
-Käyttötapaukset: https://github.com/maarila/keskustelufoorumi/tree/master/documentation/UserStories.md
-Alustava tietokantakaavio: https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Tietokantakaavio.pdf
+
+[Käyttötapaukset](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/UserStories.md)
+
+[Alustava tietokantakaavio](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Tietokantakaavio.pdf)
