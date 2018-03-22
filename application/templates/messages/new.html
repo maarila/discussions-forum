@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('messages_create') }}">
+  <textarea rows="6" cols="60" name="content" placeholder="Enter your message..."></textarea><br />
+  <input type="submit" value="Add a new message" />
+</form>
+{% endblock %}

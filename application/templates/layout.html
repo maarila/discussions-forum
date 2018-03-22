@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Forum</title>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="{{ url_for('messages_index') }}">List messages</a></li>
+      <li><a href="{{ url_for('messages_form') }}">Add a message</a></li>
+    </ul>
+
+    {% block body %}
+      <p>
+        Content.
+      </p>
+    {% endblock %}
+  </body>
+</html>

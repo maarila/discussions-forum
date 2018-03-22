@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th align="left">Message</th>
+      <th align="left">Read</th>
+      <th></th>
+    </tr>
+    {% for message in messages %}
+    <tr>
+      <td>{{ message.content }}<br />Sent by: {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M') }}</td>
+      <td>{{ message.read }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('messages_set_read', message_id=message.id) }}">
+          <input type="submit" value="Change (manually) to read" />
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
