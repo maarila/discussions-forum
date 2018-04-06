@@ -17,11 +17,28 @@ def messages_form():
     return render_template("messages/new.html", form=MessageForm())
 
 
+@app.route("/messages/<message_id>/", methods=["GET"])
+@login_required
+def messages_read_one(message_id):
+    return render_template("messages/one.html", message=Message.query.get(message_id))
+
+
 @app.route("/messages/<message_id>/", methods=["POST"])
 @login_required
 def messages_set_read(message_id):
     m = Message.query.get(message_id)
-    m.read = True
+    m.read = not m.read
+    db.session().commit()
+
+    return redirect(url_for("messages_index"))
+
+
+@app.route("/messages/<message_id>/delete", methods=["POST"])
+@login_required
+def messages_delete(message_id):
+    m = Message.query.get(message_id)
+    
+    db.session.delete(m)
     db.session().commit()
 
     return redirect(url_for("messages_index"))
