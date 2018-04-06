@@ -1,6 +1,9 @@
-from application import app, db
 from flask import redirect, render_template, request, url_for
+from flask_login import login_required, current_user
+
+from application import app, db
 from application.messages.models import Message
+from application.messages.forms import MessageForm
 
 
 @app.route("/messages/", methods=["GET"])
@@ -9,11 +12,13 @@ def messages_index():
 
 
 @app.route("/messages/new")
+@login_required
 def messages_form():
-    return render_template("messages/new.html")
+    return render_template("messages/new.html", form=MessageForm())
 
 
 @app.route("/messages/<message_id>/", methods=["POST"])
+@login_required
 def messages_set_read(message_id):
     m = Message.query.get(message_id)
     m.read = True
@@ -23,8 +28,15 @@ def messages_set_read(message_id):
 
 
 @app.route("/messages/", methods=["POST"])
+@login_required
 def messages_create():
-    m = Message(request.form.get("content"))
+    form = MessageForm(request.form)
+
+    if not form.validate():
+        return render_template("messages/new.html", form=form)
+
+    m = Message(form.name.data)
+    m.account_id = current_user.id
 
     db.session().add(m)
     db.session().commit()

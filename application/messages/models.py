@@ -14,6 +14,8 @@ class Message(db.Model):
     # simplistic manual read status info
     read = db.Column(db.Boolean, nullable=False)
 
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+                           nullable=False)
 
     def __init__(self, content):
         self.content = content
