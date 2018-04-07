@@ -1,32 +1,32 @@
-### User Stories
+### Käyttäjätarinat
 
-* As a user, I can log in to the forum.
+* Käyttäjänä voin kirjautua keskustelualustalle.
 
-* As a user, I can add a message to a topic.
+* Käyttäjänä voin lisätä aihealueelle viestin.
 
-* As a user, I can answer a message in a topic.
+* Käyttäjänä voin vastata aihealueella olevaan viestiin.
 
-* As a user, I can edit messages I posted.
+* Käyttäjänä voin muokata lähettämiäni viestejä.
 
-* As a user, I can see all the answers to a message.
+* Käyttäjänä voin nähdä kaikki vastaukset viestiin.
 
-* As a user, I can read any message in any topic.
+* Käyttäjänä voin lukea minkä tahansa viestin mistä tahansa aihealueesta.
 
-* As a user, I can see who has read a particular message.
+* Käyttäjänä voin nähdä, ketkä kaikki ovat lukeneet minkä tahansa viestin.
 
-* As a user, I can browse messages based on topic, author or age of the message.
+* Käyttäjänä voin selailla viestejä aihealueen, kirjoittajan tai viestin iän perusteella.
 
 
-* As an administrator, I can define new topics.
+* Ylläpitäjänä voin perustaa uusia aihealueita.
 
-* As an administrator, I can edit topics.
+* Ylläpitäjänä voin muokata aihealueita.
 
-* As an administrator, I can delete topics.
+* Ylläpitäjänä voin poistaa aihealueita.
 
-* As an administrator, I can delete messages.
+* Ylläpitäjänä voin poistaa viestejä.
 
-* As an administrator, I can add a user to a group.
+* Ylläpitäjänä voin lisätä käyttäjän ryhmään.
 
-* As an administrator, I can edit the group status' of users.
+* Ylläpitäjänä voin muokata käyttäjien ryhmästatusta.
 
-* As an administrator, I can remove a user from a group.
+* Ylläpitäjänä voin poistaa käyttäjän ryhmästä.
