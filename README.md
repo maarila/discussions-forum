@@ -15,6 +15,8 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 
 Sovellus Herokussa: https://foorumi-tsoha.herokuapp.com/
 
+[Dokumentaatio (sis. kirjautumisohjeen)](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Dokumentaatio.md)
+
 [Käyttötapaukset](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/UserStories.md)
 
 [Alustava tietokantakaavio](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Tietokantakaavio.pdf)
