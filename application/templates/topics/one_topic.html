@@ -5,6 +5,8 @@
 <h2>{{ topic.title }}</h2>
 <small><i>Discussion started by: {{ topic.creator }} on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M')}}</i></small>
 
+<br /><br />
+
 <h3>Messages:</h3>
     {% for message in messages %}
     <tr>
