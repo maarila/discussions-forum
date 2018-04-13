@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th align="left">Name</th>
+      <th align="left">Admin?</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+      <td><a href="/users/{{user.id}}/">{{ user.name }}</a></td>
+      <td align="center">{{ user.admin }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('users_set_admin', user_id=user.id) }}">
+          <input type="submit" value="Grant admin rights" />
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="{{ url_for('users_delete', user_id=user.id) }}">
+          <input type="submit" value="Delete user" />
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
