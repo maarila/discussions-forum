@@ -52,4 +52,4 @@ def topics_create():
     db.session().add(t)
     db.session().commit()
 
-    return redirect("/")
+    return redirect(url_for("index"))

@@ -2,6 +2,7 @@
 
 {% block body %}
 {{ error }}
+<p><small> Don't have an account? <a href="{{ url_for('auth_register') }}">Register here.</a></small></p>
 <form method="POST" action="{{ url_for('auth_login') }}">
   <table>
     <tr>
