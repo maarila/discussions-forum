@@ -23,11 +23,13 @@
             <a class="nav-link" href="{{ url_for('topics_form') }} ">Create a new topic</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('messages_index') }} ">All messages</a>
+            <a class="nav-link" href="{{ url_for('messages_index') }} ">Show all messages</a>
           </li>
+          {% if current_user.admin %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users_index') }} ">User list</a>
+            <a class="nav-link" href="{{ url_for('users_index') }} ">Show user list</a>
           </li>
+          {% endif %}
         </ul>
 
         <div class="form-inline mt-2 mt-md-0">

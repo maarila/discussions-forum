@@ -22,14 +22,16 @@ def auth_login():
     login_user(user)
     return redirect(url_for("index"))
 
+
 @app.route("/auth/register", methods=["GET"])
 def auth_register():
     return render_template("auth/registerform.html", form=RegisterForm())
 
+
 @app.route("/auth/register", methods=["POST"])
 def auth_new_register():
     form = RegisterForm(request.form)
-    
+
     if not form.validate():
         return render_template("auth/registerform.html", form=form)
 

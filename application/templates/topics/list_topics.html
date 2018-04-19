@@ -9,11 +9,13 @@
     {% for topic in topics %}
     <tr>
       <td><a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Sent by: {{ topic.creator }} @ {{ topic.date_created.strftime('%d.%m.%Y %-H:%M') }}</small></td>
+      {% if current_user.admin %}
       <td>
         <form method="POST" action="{{ url_for('topics_delete', topic_id=topic.id) }}">
           <input type="submit" value="Delete" />
         </form>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>
