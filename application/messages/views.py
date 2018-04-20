@@ -16,24 +16,15 @@ def messages_index():
 def messages_read_one(message_id):
     return render_template("messages/one.html", message=Message.query.get(message_id))
 
-# to be removed
-@app.route("/messages/<message_id>/", methods=["POST"])
-@login_required
-def messages_set_read(message_id):
-    m = Message.query.get(message_id)
-    m.read = not m.read
-    db.session().commit()
-
-    return redirect(url_for("messages_index"))
-
 
 @app.route("/messages/<message_id>/delete/", methods=["POST"])
 @login_required
 def messages_delete(message_id):
     m = Message.query.get(message_id)
-    
-    db.session.delete(m)
-    db.session().commit()
+
+    if current_user.admin:
+        db.session.delete(m)
+        db.session().commit()
 
     return redirect(url_for("messages_index"))
 

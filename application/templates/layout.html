@@ -17,24 +17,33 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/">Front page</a>
+            <a class="nav-link" href="/">Home</a>
+          </li>
+
+          <!-- functionality to be added -->
+          <li class="nav-item">
+            <a class="nav-link" href="/">Search</a>
+          </li>
+          
+          {% if current_user.admin %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth_register') }} ">Add user</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('topics_form') }} ">Create a new topic</a>
+            <a class="nav-link" href="{{ url_for('topics_form') }} ">Create topic</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('messages_index') }} ">Show all messages</a>
           </li>
-          {% if current_user.admin %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users_index') }} ">Show user list</a>
+            <a class="nav-link" href="{{ url_for('users_index') }} ">Show all users</a>
           </li>
           {% endif %}
         </ul>
 
         <div class="form-inline mt-2 mt-md-0">
           {% if current_user.is_authenticated %}
-          <a href="{{ url_for('auth_logout') }}">Hello {{ current_user.name }} -- Logout</a >
+          <a href="{{ url_for('auth_logout') }}">Hello, {{ current_user.name }} -- Logout</a >
           {% else %}
           <a class="nav-link" href="{{ url_for('auth_register') }}">Register </a>
           <a href="{{ url_for('auth_login') }}">Login</a>

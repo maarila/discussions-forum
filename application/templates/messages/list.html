@@ -1,28 +1,19 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <table>
+  <table style="border-collapse: separate;border-spacing: 9px">
     <tr>
       <th align="left">Message</th>
       <th align="left">Delete?</th>
-      <th align="left">Read</th>
-      <th></th>
     </tr>
     {% for message in messages %}
     <tr>
-      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />Sent by: {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M') }}</td>
+      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a></td>
       <td>
         <form method="POST" action="{{ url_for('messages_delete', message_id=message.id) }}">
           <input type="submit" value="Delete" />
         </form>
       </td>
-      <td>{{ message.read }}</td>
-      <td>
-        <form method="POST" action="{{ url_for('messages_set_read', message_id=message.id) }}">
-          <input type="submit" value="Change (manually)" />
-        </form>
-      </td>
-
     </tr>
     {% endfor %}
   </table>

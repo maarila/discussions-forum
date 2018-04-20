@@ -2,13 +2,15 @@
 
 {% block body %}
   <h2>Welcome to the Forum!</h2>
-  <table>
-    <tr>
-      <th align="left">Topics for discussion</th>
-    </tr>
+  <strong>Five latest topics for discussion: </strong>
+
+   <!-- functionality to be added -->
+  <small>[Show all] [Show most popular]</small>
+
+  <table style="border-collapse: separate;border-spacing: 9px;">
     {% for topic in topics %}
     <tr>
-      <td><a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Sent by: {{ topic.creator }} @ {{ topic.date_created.strftime('%d.%m.%Y %-H:%M') }}</small></td>
+      <td><a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Topic started on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M') }}</small></td>
       {% if current_user.admin %}
       <td>
         <form method="POST" action="{{ url_for('topics_delete', topic_id=topic.id) }}">

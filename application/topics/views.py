@@ -11,7 +11,10 @@ from application.messages.forms import MessageForm
 
 @app.route("/topics/", methods=["GET"])
 def topics_index():
-    return render_template("topics/list_topics.html", topics=Topic.query.all())
+    return render_template("topics/list_topics.html",
+                           topics=Topic.query.order_by(
+                               Topic.date_created.desc())
+                           .limit(5).all())
 
 
 @app.route("/topics/new/", methods=["GET"])
@@ -52,4 +55,4 @@ def topics_create():
     db.session().add(t)
     db.session().commit()
 
-    return redirect(url_for("index"))
+    return redirect(url_for("topics_index"))

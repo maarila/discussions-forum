@@ -10,7 +10,11 @@
 <h3>Messages:</h3>
     {% for message in messages %}
     <tr>
-      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />Sent by: {{ message.author }} @ {{ message.date_created }}</td><br />
+      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />Sent by: {{ message.author }} @ {{ message.date_created }}
+      {% if message.id == current_user.id %}
+      HELLOO WORLD!
+      {% endif %}
+      </td><br />
     </tr>
     {% endfor %}
 
