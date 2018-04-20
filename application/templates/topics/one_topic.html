@@ -12,7 +12,8 @@
   {% if messages %}
     {% for message in messages %}
     <tr>
-      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />Sent by: {{ message.author }} @ {{ message.date_created }}
+      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />
+      <small>Sent by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       </td>
     </tr>
     {% endfor %}
