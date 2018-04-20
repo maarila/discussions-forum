@@ -5,13 +5,13 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 
 #### Toimintoja:
 
-* Kirjautuminen
-* Kirjoituksen lisääminen
-* Kirjoitusten näyttäminen eri kriteerein
-* Ryhmän jäsenen lisääminen, muokkaaminen ja poistaminen
-* Vastineen laatiminen ja muokkaus
-* Kirjoitusten poistaminen
-* Aiheiden määrittely, muokkaus ja poisto
+- [x] Kirjautuminen
+- [x] Kirjoituksen lisääminen
+- [] Kirjoitusten näyttäminen eri kriteerein
+- [x] Ryhmän jäsenen lisääminen, muokkaaminen ja poistaminen
+- [] Vastineen laatiminen ja muokkaus
+- [x] Kirjoitusten poistaminen
+- [] Aiheiden määrittely, muokkaus ja poisto
 
 Sovellus Herokussa: https://foorumi-tsoha.herokuapp.com/
 
