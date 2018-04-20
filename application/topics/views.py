@@ -28,7 +28,7 @@ def topics_form():
 def topics_get_one(topic_id):
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=Message.find_messages_in_topic(topic_id))
+                           messages=Message.query.filter_by(topic_id=topic_id).all())
 
 
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
@@ -51,6 +51,7 @@ def topics_create():
         return render_template("topics/new_topic.html", form=form)
 
     t = Topic(form.title.data)
+    t.creator = current_user.name
 
     db.session().add(t)
     db.session().commit()

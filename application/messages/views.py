@@ -38,6 +38,7 @@ def messages_create(topic_id):
         return render_template("messages/new.html", form=form)
 
     m = Message(form.name.data)
+    m.author = current_user.name
     m.account_id = current_user.id
     m.topic_id = topic_id
 

@@ -9,4 +9,3 @@ class Topic(Base):
 
     def __init__(self, title):
         self.title = title
-        self.creator = "anonymous"

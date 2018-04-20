@@ -3,20 +3,25 @@
 {% block body %}
 
 <h2>{{ topic.title }}</h2>
-<small><i>Discussion started by: {{ topic.creator }} on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M')}}</i></small>
+<small><i>Discussion started by {{ topic.creator }} on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M')}}.</i></small>
 
 <br /><br />
 
 <h3>Messages:</h3>
+<table>
+  {% if messages %}
     {% for message in messages %}
     <tr>
       <td><a href="/messages/{{message.id}}/">{{ message.content }}</a><br />Sent by: {{ message.author }} @ {{ message.date_created }}
-      {% if message.id == current_user.id %}
-      HELLOO WORLD!
-      {% endif %}
-      </td><br />
+      </td>
     </tr>
     {% endfor %}
+  {% else %}
+  <tr>
+    <td>No messages yet in this topic. Please feel free to start the discussion!</td>
+  </tr>
+  {% endif %}
+</table>
 
 <br />
 
