@@ -7,8 +7,20 @@ from application.messages.forms import MessageForm
 
 
 @app.route("/messages/", methods=["GET"])
-def messages_index():
-    return render_template("messages/list.html", messages=Message.query.all())
+@login_required
+def messages_index(page=1):
+    per_page=5
+    messages = Message.query.order_by(Message.date_created.desc()).paginate(
+        page, per_page, False)
+    return render_template("messages/list.html", messages=messages)
+
+@app.route("/messages/<int:page>", methods=["GET"])
+@login_required
+def messages_paginated(page=1):
+    per_page=10
+    messages = Message.query.order_by(Message.date_created.desc()).paginate(
+        page, per_page, False)
+    return render_template("messages/list.html", messages=messages)
 
 
 @app.route("/messages/<message_id>/", methods=["GET"])

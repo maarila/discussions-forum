@@ -6,6 +6,7 @@ from application.auth.models import User
 
 
 @app.route("/users/", methods=["GET"])
+@login_required
 def users_index():
     return render_template("users/list_users.html", users=User.query.all())
 

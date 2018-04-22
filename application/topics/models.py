@@ -27,3 +27,13 @@ class Topic(Base):
             response.append({"id": row[0], "title": row[1], "msgs": row[2]})
 
         return response
+
+    @staticmethod
+    def find_top_topics_and_latest_messages():
+        stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content FROM Topic"
+                    " LEFT JOIN Message ON Topic.id = Message.topic_id"
+                    " ORDER BY Topic.date_created DESC"
+                    " LIMIT 5")
+        res = db.engine.execute(stmt)
+
+        return res

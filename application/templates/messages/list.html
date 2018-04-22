@@ -6,7 +6,7 @@
       <th align="left">Message</th>
       <th align="left">Delete?</th>
     </tr>
-    {% for message in messages %}
+    {% for message in messages.items %}
     <tr>
       <td><a href="/messages/{{message.id}}/">{{ message.content }}</a></td>
       <td>
@@ -17,4 +17,14 @@
     </tr>
     {% endfor %}
   </table>
+
+<div>
+  {% for page in messages.iter_pages() %}
+    {% if page != messages.page %}
+      <a href="{{ url_for('messages_paginated', page=page) }}">{{ page }}</a>
+    {% else %}
+      {{ page }}
+    {% endif %}
+  {% endfor %}
+</div>
 {% endblock %}
