@@ -46,7 +46,8 @@ class Topic(Base):
     def find_latest():
         stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content, Message.date_created FROM Topic"
                     " INNER JOIN Message ON Topic.id = Message.topic_id"
-                    " GROUP BY Topic.id, Message.id"
+                    # removed for now due to errors with PostgreSQL
+                    # " GROUP BY Topic.id, Message.id"
                     " ORDER BY Message.date_created DESC"
                     " LIMIT 5")
         res = db.engine.execute(stmt)
