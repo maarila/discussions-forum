@@ -16,7 +16,7 @@ class Topic(Base):
     def find_most_popular():
         stmt = text("SELECT Topic.id, Topic.title, COUNT(Message.id) as msgs FROM Topic"
                     " INNER JOIN Message ON Topic.id = Message.topic_id"
-                    " GROUP BY Topic.title"
+                    " GROUP BY Topic.id"
                     " ORDER BY msgs DESC"
                     " LIMIT 5")
         res = db.engine.execute(stmt)
