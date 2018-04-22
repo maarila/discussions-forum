@@ -44,7 +44,7 @@ class Topic(Base):
 
     @staticmethod
     def find_latest():
-        stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content, Message.date_created FROM Topic"
+        stmt = text("SELECT Topic.id, Topic.title, Message.id as msg_id, Message.content, Message.date_created FROM Topic"
                     " INNER JOIN Message ON Topic.id = Message.topic_id"
                     " GROUP BY Topic.id"
                     " ORDER BY Message.date_created DESC"
