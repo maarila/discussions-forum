@@ -12,7 +12,11 @@ from application.messages.forms import MessageForm
 @app.route("/topics/", methods=["GET"])
 def topics_index():
     return render_template("topics/list_topics.html",
-                           topics=Topic.find_latest())
+                          # removed for now
+                          # topics=Topic.find_latest())
+                           topics=Topic.query.order_by(
+                               Topic.date_created.desc())
+                           .limit(5).all())
 
 
 @app.route("/topics/popular", methods=["GET"])
