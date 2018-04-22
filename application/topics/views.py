@@ -17,6 +17,19 @@ def topics_index():
                            .limit(5).all())
 
 
+@app.route("/topics/popular", methods=["GET"])
+def topics_popular():
+    return render_template("topics/list_popular_topics.html",
+                           topics=Topic.find_most_popular())
+
+
+@app.route("/topics/all", methods=["GET"])
+def topics_all():
+    return render_template("topics/list_all_topics.html",
+                           topics=Topic.query.order_by(
+                               Topic.date_created.desc()).all())
+
+
 @app.route("/topics/new/", methods=["GET"])
 @login_required(role="ADMIN")
 def topics_form():

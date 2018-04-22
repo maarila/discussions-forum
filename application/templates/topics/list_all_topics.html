@@ -2,10 +2,10 @@
 
 {% block body %}
   <h2>Welcome to the Forum!</h2>
-  <strong>Five latest topics for discussion: </strong>
+  <strong>All topics for discussion: </strong>
 
   <small>
-    <a href="{{ url_for('topics_all') }}">[Show all]</a>
+    <a href="{{ url_for('topics_index') }}"">[Show latest]</a>
     <a href="{{ url_for('topics_popular') }}">[Show most popular]</a>
   </small>
 
