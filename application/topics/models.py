@@ -44,12 +44,12 @@ class Topic(Base):
 
     @staticmethod
     def find_latest():
-        stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content, Message.date_created FROM Topic"
-                    " INNER JOIN Message ON Topic.id = Message.topic_id"
-                    # removed for now due to errors with PostgreSQL
-                    # " GROUP BY Topic.id, Message.id"
-                    " ORDER BY Message.date_created DESC"
-                    " LIMIT 5")
+        stmt = text("SELECT Topic.id, Topic.title, x.id AS msg_id, x.content, x.date_created FROM"
+                    " (SELECT DISTINCT ON(Message.topic_id), Message.id, Message.content, Message.date_created, Message.topic_id FROM Message"
+                    " ORDER BY Message.topic_id, Message.date_created DESC"
+                    " LIMIT 5) AS x"
+                    " INNER JOIN Topic ON Topic.id = x.topic_id"
+                    " ORDER BY x.date_created DESC")
         res = db.engine.execute(stmt)
 
         response = []
