@@ -10,26 +10,19 @@
   </small>
 
   <table style="border-collapse: separate;border-spacing: 4px;">
-    {% for item in topics %}
+    {% for topic in topics %}
     <tr>
       <td>
-        <a href="/topics/{{item.topic_id}}/">{{ item.topic_title }}</a><br />
+        <a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br />
       </td>
       {% if current_user.admin %}
       <td>
-        <form method="POST" action="{{ url_for('topics_delete', topic_id=item.topic_id) }}">
+        <form method="POST" action="{{ url_for('topics_delete', topic_id=topic.id) }}">
           <input type="submit" value="Delete" />
         </form>
       </td>
       {% endif %}
     </tr>
-    <td>
-      <small>
-        Newest message: <a href="/messages/{{item.msg_id}}/">{{ item.msg_content }}</a>
-      </small>
-      <td>
-        <small> {{ item.msg_created }}</small>
-      </td>
     {% endfor %}
   </table>
 {% endblock %}
