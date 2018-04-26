@@ -9,9 +9,9 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 - [x] Kirjoituksen lisääminen
 - [ ] Kirjoitusten näyttäminen eri kriteerein
 - [x] Ryhmän jäsenen lisääminen, muokkaaminen ja poistaminen
-- [ ] Vastineen laatiminen ja muokkaus
+- [x] Vastineen laatiminen ja muokkaus
 - [x] Kirjoitusten poistaminen
-- [ ] Aiheiden määrittely, muokkaus ja poisto
+- [x] Aiheiden määrittely, muokkaus ja poisto
 
 Sovellus Herokussa: https://foorumi-tsoha.herokuapp.com/
 

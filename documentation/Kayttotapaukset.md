@@ -19,7 +19,7 @@
 
 - [x] Ylläpitäjänä voin perustaa uusia aihealueita.
 
-- [ ] Ylläpitäjänä voin muokata aihealueita.
+- [x] Ylläpitäjänä voin muokata aihealueita.
 
 - [x] Ylläpitäjänä voin poistaa aihealueita.
 
