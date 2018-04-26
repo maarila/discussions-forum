@@ -25,6 +25,32 @@ def messages_paginated(page=1):
     return render_template("messages/list.html", messages=messages)
 
 
+@app.route("/messages/<message_id>/edit", methods=["GET"])
+@login_required
+def messages_get_for_edit(message_id):
+    m = Message.query.get(message_id)
+    return render_template("messages/edit.html", form=MessageForm(name=m.content),
+                           message=Message.query.get(message_id))
+
+
+@app.route("/messages/<message_id>/edit", methods=["POST"])
+@login_required
+def messages_edit(message_id):
+    form = MessageForm(request.form)
+
+    if not form.validate():
+        return render_template("messages/edit.html", form=MessageForm(name=form.name.data),
+                               message=Message.query.get(message_id))
+
+    m = Message.query.get(message_id)
+    m.content = form.name.data
+
+    if current_user.id == m.account_id:
+        db.session.commit()
+
+    return redirect(url_for("messages_read_one", topic_id=m.topic_id, message_id=m.id))
+
+
 @app.route("/messages/<message_id>/delete/", methods=["POST"])
 @login_required
 def messages_delete(message_id):

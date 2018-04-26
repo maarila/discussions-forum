@@ -8,17 +8,26 @@
 <small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} </small>
       
 <div style="white-space: pre-line;">{{ message.content }}</div>
+{% if message.account_id == current_user.id %}
+<a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
+{% endif%}
 
 <hr>
+
 {% for reply in replies %}
 <small>Reply by {{ reply.author }} @ {{ reply.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       
 <div style="white-space: pre-line;">{{ reply.content }}</div>
 
 <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
+
 <small>
   <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">See replies.</a>
 </small>
+
+{% if message.account_id == current_user.id %}
+<a href="/messages/{{ reply.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
+{% endif%}
 
 <hr>
 {% endfor %}

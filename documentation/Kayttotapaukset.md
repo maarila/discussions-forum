@@ -4,9 +4,9 @@
 
 - [x] Käyttäjänä voin lisätä aihealueelle viestin.
 
-- [ ] Käyttäjänä voin vastata aihealueella olevaan viestiin.
+- [x] Käyttäjänä voin vastata aihealueella olevaan viestiin.
 
-- [ ] Käyttäjänä voin muokata lähettämiäni viestejä.
+- [x] Käyttäjänä voin muokata lähettämiäni viestejä.
 
 - [ ] Käyttäjänä voin nähdä kaikki vastaukset viestiin.
 
