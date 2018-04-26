@@ -15,6 +15,9 @@ class Message(Base):
     topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'),
                          nullable=False)
 
+    reply_id = db.Column(db.Integer, db.ForeignKey(
+        'message.id'), nullable=True)
+
     def __init__(self, content):
         self.content = content
         self.read = False

@@ -12,8 +12,7 @@
   <table style="border-collapse: separate;border-spacing: 4px;">
     {% for topic in topics %}
     <tr>
-      <td>
-        <a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br />
+      <td><a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Topic started on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M') }}</small></td>
       </td>
       {% if current_user.admin %}
       <td>

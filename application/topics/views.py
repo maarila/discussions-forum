@@ -11,7 +11,7 @@ from application.messages.forms import MessageForm
 
 @app.route("/topics/", methods=["GET"])
 def topics_index():
-    return render_template("topics/list_topics.html",
+    return render_template("topics/list_newest_topics.html",
                            topics=Topic.query.order_by(
                                Topic.date_created.desc())
                            .limit(5).all())
@@ -42,7 +42,8 @@ def topics_get_one(topic_id, page=1):
     per_page = 5
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=Message.query.filter_by(topic_id=topic_id)
+                           messages=Message.query.filter_by(
+                               topic_id=topic_id, reply_id=None)
                            .paginate(page, per_page, False))
 
 
@@ -52,7 +53,8 @@ def topics_get_one_paginated(topic_id, page=1):
     per_page = 5
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=Message.query.filter_by(topic_id=topic_id)
+                           messages=Message.query.filter_by(
+                               topic_id=topic_id, reply_id=None)
                            .paginate(page, per_page, False))
 
 

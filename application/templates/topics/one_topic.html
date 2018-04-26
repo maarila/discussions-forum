@@ -13,26 +13,23 @@
 
 <table style="width:60%">
   {% if messages %}
-    {% for message in messages.items %}
-    <tr>
-      <td>
-        
-        <small>
-          Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}
-        </small>
-        <div style="white-space: pre-line;">{{ message.content }}</div>
-
-        <form method="POST" action="/messages/{{message.id}}/reply/new">
-          <input type="submit" style="font-size:11px" value="Reply" />
-          <small>
-            <a href="/messages/{{message.id}}/">See replies.</a>
-          </small>
-        </form>
-        <hr>
+  {% for message in messages.items %}
+  <tr>
+    <td>
+      <small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       
-      </td>
-    </tr>
-    {% endfor %}
+      <p style="white-space: pre-line;">{{ message.content }}</p>
+
+      <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
+      <small>
+        <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies.</a>
+      </small>
+
+      <hr>      
+
+    </td>
+  </tr>
+  {% endfor %}
   {% else %}
   <tr>
     <td>No messages yet in this topic. Please feel free to start the discussion!</td>
@@ -42,17 +39,18 @@
 
 <div>
   {% for page in messages.iter_pages() %}
-    {% if page != messages.page %}
-      <a href="{{ url_for('topics_get_one_paginated', topic_id=topic.id, page=page) }}">{{ page }}</a>
-    {% else %}
-      {{ page }}
-    {% endif %}
+  {% if page != messages.page %}
+  <a href="{{ url_for('topics_get_one_paginated', topic_id=topic.id, page=page) }}">
+  {{ page }}</a>
+  {% else %}
+  {{ page }}
+  {% endif %}
   {% endfor %}
 </div>
 
 <br />
 
-<form method="POST" action="/topics/{{topic.id}}/messages/new">
+<form method="POST" action="/topics/{{ topic.id }}/messages/new">
   Add a new message to the topic:<br />
   {{ form.name(cols="60", rows="6") }}<br />
   <ul>
