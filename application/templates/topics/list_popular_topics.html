@@ -14,9 +14,14 @@
     <tr>
       <td><a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Number of replies: {{ topic.msgs }}</small></td>
       {% if current_user.admin %}
+      <td>  
+        <form method="GET" action="{{ url_for('topics_get_for_edit', topic_id=topic.id) }}">
+          <input class="btn btn-outline-primary btn-sm" type="submit" value="Edit" />
+        </form>
+      </td>      
       <td>
         <form method="POST" action="{{ url_for('topics_delete', topic_id=topic.id) }}">
-          <input type="submit" value="Delete" />
+          <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
         </form>
       </td>
       {% endif %}

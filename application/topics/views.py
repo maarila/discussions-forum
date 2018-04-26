@@ -17,13 +17,13 @@ def topics_index():
                            .limit(5).all())
 
 
-@app.route("/topics/popular", methods=["GET"])
+@app.route("/topics/popular/", methods=["GET"])
 def topics_popular():
     return render_template("topics/list_popular_topics.html",
                            topics=Topic.find_most_popular())
 
 
-@app.route("/topics/all", methods=["GET"])
+@app.route("/topics/all/", methods=["GET"])
 def topics_all():
     return render_template("topics/list_all_topics.html",
                            topics=Topic.query.order_by(
@@ -58,6 +58,32 @@ def topics_get_one_paginated(topic_id, page=1):
                            .paginate(page, per_page, False))
 
 
+@app.route("/topics/<topic_id>/edit/", methods=["GET"])
+@login_required(role="ADMIN")
+def topics_get_for_edit(topic_id):
+    t = Topic.query.get(topic_id)
+    return render_template("topics/edit.html", form=TopicForm(title=t.title),
+                           topic=t)
+
+
+@app.route("/topics/<topic_id>/edit/", methods=["POST"])
+@login_required(role="ADMIN")
+def topics_edit(topic_id):
+    form = TopicForm(request.form)
+
+    if not form.validate():
+        return render_template("topics/edit.html", form=TopicForm(title=form.title.data),
+                               topic=Topic.query.get(topic_id))
+
+    t = Topic.query.get(topic_id)
+    t.title = form.title.data
+
+    if current_user.admin:
+        db.session.commit()
+
+    return redirect(url_for("topics_index"))
+
+
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
 @login_required(role="ANY")
 def topics_delete(topic_id):
@@ -69,7 +95,7 @@ def topics_delete(topic_id):
     return redirect("/")
 
 
-@app.route("/topics/new", methods=["POST"])
+@app.route("/topics/new/", methods=["POST"])
 @login_required(role="ADMIN")
 def topics_create():
     form = TopicForm(request.form)

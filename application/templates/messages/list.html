@@ -11,7 +11,7 @@
       <td><a href="/messages/{{message.id}}/">{{ message.content }}</a></td>
       <td>
         <form method="POST" action="{{ url_for('messages_delete', message_id=message.id) }}">
-          <input type="submit" value="Delete" />
+          <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
         </form>
       </td>
     </tr>

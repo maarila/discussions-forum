@@ -13,25 +13,25 @@
 
 <table style="width:60%">
   {% if messages %}
-  {% for message in messages.items %}
-  <tr>
-    <td>
-      <small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
+    {% for message in messages.items %}
+    <tr>
+      <td>
+        <small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       
-      <p style="white-space: pre-line;">{{ message.content }}</p>
+        <p style="white-space: pre-line;">{{ message.content }}</p>
 
-      <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
-      <small>
-        <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies.</a>
-      </small>
-      {% if message.account_id == current_user.id %}
-      <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit reply</a>
-      {% endif%}
-      <hr>      
+        <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
+        <small>
+          <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies.</a>
+        </small>
+        {% if message.account_id == current_user.id %}
+        <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit reply</a>
+        {% endif%}
+        <hr>      
 
-    </td>
-  </tr>
-  {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
   {% else %}
   <tr>
     <td>No messages yet in this topic. Please feel free to start the discussion!</td>
