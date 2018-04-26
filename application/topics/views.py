@@ -12,7 +12,6 @@ from application.messages.forms import MessageForm
 @app.route("/topics/", methods=["GET"])
 def topics_index():
     return render_template("topics/list_topics.html",
-                           # topics=Topic.find_latest())
                            topics=Topic.query.order_by(
                                Topic.date_created.desc())
                            .limit(5).all())
@@ -39,10 +38,22 @@ def topics_form():
 
 @app.route("/topics/<topic_id>/", methods=["GET"])
 @login_required(role="ANY")
-def topics_get_one(topic_id):
+def topics_get_one(topic_id, page=1):
+    per_page = 5
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=Message.query.filter_by(topic_id=topic_id).all())
+                           messages=Message.query.filter_by(topic_id=topic_id)
+                           .paginate(page, per_page, False))
+
+
+@app.route("/topics/<topic_id>/<int:page>", methods=["GET"])
+@login_required(role="ANY")
+def topics_get_one_paginated(topic_id, page=1):
+    per_page = 5
+    return render_template("topics/one_topic.html", form=MessageForm(),
+                           topic=Topic.query.get(topic_id),
+                           messages=Message.query.filter_by(topic_id=topic_id)
+                           .paginate(page, per_page, False))
 
 
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
