@@ -11,12 +11,12 @@
 
 <hr>
 
-<table style="width:60%">
+<div style="width:60%">
   {% if messages %}
     {% for message in messages.items %}
-    <tr>
-      <td>
-        <small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
+    <div>
+      <div>
+        <small>Written by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} &nbsp;--&nbsp; message {{ loop.index }}/{{ loop.length }}</small>
       
         <p style="white-space: pre-line;">{{ message.content }}</p>
 
@@ -29,15 +29,15 @@
         {% endif%}
         <hr>      
 
-      </td>
-    </tr>
+      </div>
+    </div>
     {% endfor %}
   {% else %}
-  <tr>
-    <td>No messages yet in this topic. Please feel free to start the discussion!</td>
-  </tr>
+  <div>
+    <p>No messages yet in this topic. Please feel free to start the discussion!</p>
+  </div>
   {% endif %}
-</table>
+</div>
 
 <div>
   {% for page in messages.iter_pages() %}
