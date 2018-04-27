@@ -72,7 +72,7 @@ class Topic(Base):
 
         for row in res:
             response.append({"topic_id": row[0], "topic_title": row[1], "msg_id": row[
-                            2], "msg_content": reduce_msg(row[3]), "msg_created": datetime.strptime(row[4], '%Y-%m-%d %H:%M:%S').strftime('%d.%m.%Y %-H:%M')})
+                            2], "msg_content": reduce_msg(row[3]), "msg_created": datetime.strptime(row[4], '%Y-%m-%d %H:%M:%S.%f').strftime('%d.%m.%Y %-H:%M')})
 
         return response
 
