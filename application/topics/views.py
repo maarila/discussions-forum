@@ -29,12 +29,6 @@ def topics_popular_sql():
                            topics=Topic.find_latest_sql())
 
 
-@app.route("/topics/postgre/", methods=["GET"])
-def topics_popular_postgre():
-    return render_template("topics/list_newest_sql_postgre.html",
-                           topics=Topic.find_latest_postgre())
-
-
 @app.route("/topics/all/", methods=["GET"])
 def topics_all():
     return render_template("topics/list_all_topics.html",

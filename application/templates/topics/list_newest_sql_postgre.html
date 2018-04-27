@@ -9,10 +9,7 @@
     <a href="{{ url_for('topics_popular') }}">[Show most popular]</a>
     <a href="{{ url_for('topics_all') }}">[Show all]</a>
     For test purposes -->
-    <!-- works only locally on SQLite-->
-    <a href="{{ url_for('topics_popular_sql') }}">[Show latest locally (SQLite query)]</a>
-    <!-- works only on Heroku PostgreSQL-->
-    <a href="{{ url_for('topics_popular_postgre') }}">[Show latest on Heroku (PostgreSQL query)]</a>
+    <a href="{{ url_for('topics_popular_sql') }}">[Show latest (for local SQLite only!)]</a>
   </small>
 </div>
 <hr>
