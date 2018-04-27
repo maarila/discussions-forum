@@ -61,7 +61,7 @@ class Topic(Base):
     @staticmethod
     def find_latest_postgre():
         stmt = text("SELECT Topic.id, Topic.title, x.id AS msg_id, x.content, x.date_created FROM"
-                    " (SELECT DISTINCT ON(Message.topic_id), Message.id, Message.content, Message.date_created, Message.topic_id FROM Message"
+                    " (SELECT DISTINCT ON(Message.topic_id) Message.id, Message.content, Message.date_created, Message.topic_id FROM Message"
                     " ORDER BY Message.topic_id, Message.date_created DESC"
                     " LIMIT 5) AS x"
                     " INNER JOIN Topic ON Topic.id = x.topic_id"
