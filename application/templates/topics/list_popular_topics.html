@@ -5,8 +5,13 @@
 <strong>Five most popular topics for discussion:</strong>
 <div>
   <small>
+    <a href="{{ url_for('topics_index') }}"">[Show newest]</a>
+    <a href="{{ url_for('topics_popular') }}">[Show most popular]</a>
     <a href="{{ url_for('topics_all') }}">[Show all]</a>
-    <a href="{{ url_for('topics_index') }}">[Show newest]</a>
+    <!-- works only locally -->
+    <a href="{{ url_for('topics_popular_sql') }}">[Show latest SQL]</a>
+    <!-- works only on Heroku -->
+    <a href="{{ url_for('topics_popular_postgre') }}">[Show latest Heroku PostgreSQL]</a>    
   </small>
 </div>
 <hr>

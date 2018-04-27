@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h2>Welcome to the Forum!</h2>
+<strong>These are the five latest topics being discussed: </strong>
+<div>
+  <small>
+    <a href="{{ url_for('topics_index') }}"">[Show newest]</a>
+    <a href="{{ url_for('topics_popular') }}">[Show most popular]</a>
+    <a href="{{ url_for('topics_all') }}">[Show all]</a>
+    For test purposes -->
+    <!-- works only locally on SQLite-->
+    <a href="{{ url_for('topics_popular_sql') }}">[Show latest locally (SQLite query)]</a>
+    <!-- works only on Heroku PostgreSQL-->
+    <a href="{{ url_for('topics_popular_postgre') }}">[Show latest on Heroku (PostgreSQL query)]</a>
+  </small>
+</div>
+<hr>
+{% for item in topics %}
+<div>
+  <a href="/topics/{{item.topic_id}}/">{{ item.topic_title }}</a><br />
+  
+  {% if current_user.admin %}
+  <div>
+    <form method="POST" action="{{ url_for('topics_delete', topic_id=item.topic_id) }}">
+      <input type="submit" value="Delete" />
+    </form>
+  </div>
+  {% endif %}
+  <div>
+    <small>
+      Newest message: <a href="/topics/{{ item.topic_id }}/messages/{{item.msg_id}}/">{{ item.msg_content }}</a>
+    </small>
+    <small>{{ item.msg_created }}</small>
+  </div>
+  <br />
+{% endfor %}
+</div>
+{% endblock %}

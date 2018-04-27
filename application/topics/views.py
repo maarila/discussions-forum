@@ -23,6 +23,18 @@ def topics_popular():
                            topics=Topic.find_most_popular())
 
 
+@app.route("/topics/sql/", methods=["GET"])
+def topics_popular_sql():
+    return render_template("topics/list_newest_sql_postgre.html",
+                           topics=Topic.find_latest_sql())
+
+
+@app.route("/topics/postgre/", methods=["GET"])
+def topics_popular_postgre():
+    return render_template("topics/list_newest_sql_postgre.html",
+                           topics=Topic.find_latest_postgre())
+
+
 @app.route("/topics/all/", methods=["GET"])
 def topics_all():
     return render_template("topics/list_all_topics.html",
@@ -88,6 +100,8 @@ def topics_edit(topic_id):
 @login_required(role="ANY")
 def topics_delete(topic_id):
     t = Topic.query.get(topic_id)
+
+    # TODO: delete all messages related to topic
 
     db.session.delete(t)
     db.session().commit()
