@@ -69,6 +69,7 @@ from application.auth import models
 from application.auth import views
 
 from application.users import views
+from application.search import views
 
 # kirjautuminen, osa 2
 from application.auth.models import User

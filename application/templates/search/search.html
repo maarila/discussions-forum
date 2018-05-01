@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+Searching for:
+<form method="POST" action="{{ url_for('search_topic') }}">
+  {{ form.search_phrase }}<br />
+  {% for button in form.searching_for%} 
+    {{ button }} {{ button.label }}
+  {% endfor %}
+  <br />
+  <input type="submit" value="Search" />
+  <ul>
+    {% for error in form.search_phrase.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+
+</form>
+
+{% for topic in topics %}
+  <div><a href="/topics/{{topic.id}}/">{{ topic.title }}</div>
+{% endfor %}
+
+{% endblock %}
