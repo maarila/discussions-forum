@@ -5,7 +5,7 @@ from wtforms import StringField, RadioField, DateTimeField, validators
 class SearchForm(FlaskForm):
     search_phrase = StringField("Search", [validators.Length(min=2)])
     searching_for = RadioField("Search", choices=[
-                        ("topic", "topic"), ("author", "author")], default="topic")
+        ("topic", "topic"), ("author", "messages by")], default="topic")
 
     class Meta:
         csrf = False

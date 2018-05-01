@@ -2,6 +2,7 @@ from flask import render_template, url_for, redirect, request
 
 from application import app
 from application.topics.models import Topic
+from application.messages.models import Message
 
 from application.search.forms import SearchForm, SearchDateForm
 
@@ -14,8 +15,10 @@ def search_index():
 
 @app.route("/search/topic/", methods=["POST"])
 def search_topic():
-    form = SearchForm(request.form)
+    topics = []
+    messages = []
 
+    form = SearchForm(request.form)
     search_term = form.search_phrase.data
 
     if not form.validate():
@@ -24,11 +27,13 @@ def search_topic():
     searching_for = form.searching_for.data
 
     if searching_for == "topic":
-        results = Topic.query.filter(
+        topics = Topic.query.filter(
             Topic.title.like("%" + search_term + "%")).all()
+    elif searching_for == "author":
+        messages = Message.query.filter(
+            Message.author.like("%" + search_term + "%")).all()
     else:
-        results = Topic.query.filter(
-            Topic.creator.like("%" + search_term + "%")).all()
+        results = Topic.find_topics_or_messages(search_term)
 
-    return render_template("search/search.html", topics=results, form=SearchForm(),
-                           dateform=SearchDateForm())
+    return render_template("search/search.html", topics=topics, messages=messages,
+                           form=SearchForm(), dateform=SearchDateForm())

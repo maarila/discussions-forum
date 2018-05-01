@@ -43,18 +43,22 @@ class Topic(Base):
         return response
 
     @staticmethod
-    def find_topics(search_term):
-        stmt = text("SELECT * FROM Topic"
-                    " WHERE Topic.title LIKE '%:search_term%'"
-                    " ORDER BY Topic.date_created"
-                    " LIMIT 10").params(search_term=search_term)
+    def find_topics_or_messages(search_term):
+
+        searching_for = '%' + search_term + '%'
+
+        stmt = text("SELECT * FROM Topic, Message"
+                    " WHERE Topic.creator LIKE :search"
+                    " OR Message.author LIKE :search"
+                    " LIMIT 10").params(search=searching_for)
         res = db.engine.execute(stmt)
 
         response = []
 
         for row in res:
-            response.append({"id": row[0], "date_created": row[
-                            1], "title": row[3], "creator": row[4]})
+            print(row)
+            # response.append({"id": row[0], "date_created": row[
+            #                 1], "title": row[3], "creator": row[4]})
 
         return response
 

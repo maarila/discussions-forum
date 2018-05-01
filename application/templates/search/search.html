@@ -14,11 +14,22 @@ Searching for:
     <li>{{ error }}</li>
     {% endfor %}
   </ul>
-
 </form>
 
-{% for topic in topics %}
-  <div><a href="/topics/{{topic.id}}/">{{ topic.title }}</div>
-{% endfor %}
+{% if topics %}
+  {% for topic in topics %}
+    <div>
+      <a href="/topics/{{ topic.id }}/">{{ topic.title }}</a>
+    </div>
+  {% endfor %}
+
+{% elif messages %}
+  {% for message in messages %}
+  <small>Message by {{ message.author }}:</small>
+  <div style="width: 60%">
+    <a href="/topics/{{ message.topic_id }}/messages/{{ message.id }}">{{ message.content }}</a>
+  </div>
+  {% endfor %}
+{% endif %}
 
 {% endblock %}
