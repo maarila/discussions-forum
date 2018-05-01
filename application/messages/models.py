@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from application import db
 from application.models import Base
 
@@ -23,9 +25,20 @@ class Message(Base):
         self.read = False
 
     @staticmethod
-    def find_messages_in_topic(topic_id):
+    def find_messages_by_date(start, end):
+        end_of_day = end + " 23:59:59"
+
         stmt = text("SELECT * FROM Message"
-                    " WHERE topic_id = :topic_id").params(topic_id=topic_id)
+                    " WHERE date_created BETWEEN :start AND :end"
+                    ).params(start=start, end=end_of_day)
+
         res = db.engine.execute(stmt)
 
-        return res
+        response = []
+
+        for row in res:
+            response.append({"id": row[0], "date_created": datetime.strptime(
+                row[1], '%Y-%m-%d %H:%M:%S').strftime('%d.%m.%Y %-H:%M'),
+                "author": row[3], "content": row[4], "topic_id": row[7]})
+
+        return response

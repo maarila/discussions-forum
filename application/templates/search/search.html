@@ -1,20 +1,32 @@
 {% extends "layout.html" %}
 
 {% block body %}
-Searching for:
+
+<strong>Search by keyword</strong>
 <form method="POST" action="{{ url_for('search_topic') }}">
-  {{ form.search_phrase }}<br />
+  {{ form.search_phrase }}
+  <input type="submit" value="Search" /><br />
   {% for button in form.searching_for%} 
     {{ button }} {{ button.label }}
   {% endfor %}
   <br />
-  <input type="submit" value="Search" />
   <ul>
     {% for error in form.search_phrase.errors %}
     <li>{{ error }}</li>
     {% endfor %}
   </ul>
 </form>
+
+<strong>Search by date:</strong>
+<form method="POST" action="{{ url_for('search_topic_by_date') }}">
+  From:
+  <input type="date" name="start" id="start" />
+  To:
+  <input type="date" name="end" id="end" />
+  <input type="submit" value="Search by date" />
+</form>
+<hr>
+<script>document.getElementById('end').valueAsDate = new Date();</script>
 
 {% if topics %}
   {% for topic in topics %}
@@ -28,6 +40,14 @@ Searching for:
   <small>Message by {{ message.author }}:</small>
   <div style="width: 60%">
     <a href="/topics/{{ message.topic_id }}/messages/{{ message.id }}">{{ message.content }}</a>
+  </div>
+  {% endfor %}
+
+{% elif dated_messages %}
+  {% for msg in dated_messages %}
+  <small>Message sent @ {{ msg.date_created }}:</small>
+  <div style="width: 60%">
+    <a href="/topics/{{ msg.topic_id }}/messages/{{ msg.id }}">{{ msg.content }}</a>
   </div>
   {% endfor %}
 {% endif %}

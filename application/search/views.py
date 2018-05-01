@@ -9,8 +9,7 @@ from application.search.forms import SearchForm, SearchDateForm
 
 @app.route("/search/", methods=["GET"])
 def search_index():
-    return render_template("search/search.html", form=SearchForm(),
-                           dateform=SearchDateForm())
+    return render_template("search/search.html", form=SearchForm())
 
 
 @app.route("/search/topic/", methods=["POST"])
@@ -36,4 +35,18 @@ def search_topic():
         results = Topic.find_topics_or_messages(search_term)
 
     return render_template("search/search.html", topics=topics, messages=messages,
-                           form=SearchForm(), dateform=SearchDateForm())
+                           form=SearchForm())
+
+
+@app.route("/search/topic/date", methods=["POST"])
+def search_topic_by_date():
+    topics = []
+    messages = []
+
+    start = request.form['start']
+    end = request.form['end']
+
+    dated_messages = Message.find_messages_by_date(start, end)
+
+    return render_template("search/search.html", dated_messages=dated_messages,
+                           form=SearchForm())

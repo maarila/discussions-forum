@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, RadioField, DateTimeField, validators
+from wtforms import StringField, RadioField, DateField, validators
 
 
 class SearchForm(FlaskForm):
@@ -12,7 +12,7 @@ class SearchForm(FlaskForm):
 
 
 class SearchDateForm(FlaskForm):
-    date = DateTimeField("Date")
+    date = DateField("Date")
 
     class Meta:
         csrf = False
