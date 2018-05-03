@@ -12,7 +12,7 @@
 
 - [x] Käyttäjänä voin lukea minkä tahansa viestin mistä tahansa aihealueesta.
 
-- [ ] Käyttäjänä voin nähdä, ketkä kaikki ovat lukeneet minkä tahansa viestin.
+- [x] Käyttäjänä voin nähdä, ketkä kaikki ovat lukeneet minkä tahansa viestin.
 
 - [x] Käyttäjänä voin selailla viestejä aihealueen, kirjoittajan tai viestin iän perusteella.
 

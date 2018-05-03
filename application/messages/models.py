@@ -25,7 +25,7 @@ class Message(Base):
                          nullable=False)
 
     reply_id = db.Column(db.Integer, db.ForeignKey(
-            'message.id'), nullable=True)
+        'message.id'), nullable=True)
 
     views = db.relationship('User', secondary=views, lazy='subquery',
                             backref=db.backref('message', lazy=True))

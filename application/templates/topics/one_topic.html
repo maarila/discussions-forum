@@ -13,18 +13,16 @@
     {% for message in messages.items %}
     <div>
       <div>
-        <small>Written by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} &nbsp;--&nbsp; message {{ loop.index }}/{{ loop.length }}</small>
+        <small><a href="{{ url_for('users_get_one', user_id=message.account_id) }}"> {{ message.author }}</a> @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} &nbsp;--&nbsp; message {{ loop.index }}/{{ loop.length }}</small>
       
         <p style="white-space: pre-line;">{{ message.content }}</p>
 
-        <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
         <small>
-          <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies.</a>
+          <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies or write a reply</a>
         </small>
 
-
         {% if message.account_id == current_user.id %}
-        <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit reply</a>
+        <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
         {% endif%}
         <div><small>
           Read by:

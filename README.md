@@ -7,7 +7,7 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 
 - [x] Kirjautuminen
 - [x] Kirjoituksen lisääminen
-- [ ] Kirjoitusten näyttäminen eri kriteerein
+- [x] Kirjoitusten näyttäminen eri kriteerein
 - [x] Ryhmän jäsenen lisääminen, muokkaaminen ja poistaminen
 - [x] Vastineen laatiminen ja muokkaus
 - [x] Kirjoitusten poistaminen

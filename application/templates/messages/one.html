@@ -2,9 +2,9 @@
 
 {% block body %}
 
-<a href="/topics/{{ topic.id }}/">< Return to "{{ topic.title }}"</a><hr>
-
-<small>Message by {{ message.author }} @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} </small>
+<a href="/topics/{{ topic.id }}/">< Return to "{{ topic.title }}"</a>
+<hr>
+<small><a href="{{ url_for('users_get_one', user_id=message.account_id) }}"> {{ message.author }}</a> @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} </small>
       
 <div style="white-space: pre-line;">{{ message.content }}</div>
 
@@ -23,19 +23,18 @@
 
 <hr>
 
+<div class="container">
 {% for reply in replies %}
-  <small>Reply by {{ reply.author }} @ {{ reply.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
+  <small>Reply by <a href="{{ url_for('users_get_one', user_id=reply.account_id) }}"> {{ reply.author }}</a> @ {{ reply.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       
   <div style="white-space: pre-line;">{{ reply.content }}</div>
 
-  <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/" class="btn btn-outline-primary btn-sm" role="button">Reply</a>
-
   <small>
-    <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">See replies.</a>
+    <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">See replies or write a reply</a>
   </small>
 
   {% if reply.account_id == current_user.id %}
-  <a href="/messages/{{ reply.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
+  <a href="/messages/{{ reply.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit your reply</a>
   {% endif%}
   <div>
     <small>Read by:
@@ -46,10 +45,9 @@
     {% endfor %}
     </small>
   </div>
-
   <hr>
-
 {% endfor %}
+</div>
 
 <form method="POST" action="/topics/{{ topic.id }}/messages/{{ message.id }}/reply">
   Reply to message:<br />
@@ -61,5 +59,4 @@
   </ul>
   <input type="submit" class="btn btn-outline-primary" value="Reply" />
 </form>
-
 {% endblock %}
