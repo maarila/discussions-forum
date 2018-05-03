@@ -16,6 +16,8 @@
 
 - [x] Käyttäjänä voin selailla viestejä aihealueen, kirjoittajan tai viestin iän perusteella.
 
+- [x] Käyttäjänä voin nähdä tietoja itsestäni ja muista käyttäjistä.
+
 
 - [x] Ylläpitäjänä voin perustaa uusia aihealueita.
 
