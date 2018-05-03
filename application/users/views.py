@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.auth.models import User
+from application.messages.models import Message
+from application.topics.models import Topic
 
 
 @app.route("/users/", methods=["GET"])
@@ -30,6 +32,7 @@ def users_set_admin(user_id):
 @app.route("/users/<user_id>/delete/", methods=["POST"])
 @login_required
 def users_delete(user_id):
+    Message.query.filter_by(account_id=user_id).delete()
     u = User.query.get(user_id)
 
     db.session.delete(u)
