@@ -107,7 +107,6 @@ def topics_get_for_edit(topic_id):
 @login_required(role="ADMIN")
 def topics_edit(topic_id):
     form = TopicForm(request.form)
-    print("HEELLLOOUUUU")
     if not form.validate():
         return render_template("topics/edit.html", form=TopicForm(title=form.title.data),
                                topic=Topic.query.get(topic_id))
@@ -124,9 +123,10 @@ def topics_edit(topic_id):
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
 @login_required(role="ANY")
 def topics_delete(topic_id):
-    t = Topic.query.get(topic_id)
 
-    db.session.delete(t)
+    Message.query.filter_by(topic_id=topic_id).delete()
+    Topic.query.filter_by(id=topic_id).delete()
+
     db.session().commit()
 
     return redirect("/")

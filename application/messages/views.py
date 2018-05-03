@@ -76,7 +76,6 @@ def messages_read_one(topic_id, message_id):
                            replies=replies)
 
 
-# add a message to topic
 @app.route("/topics/<topic_id>/messages/new", methods=["POST"])
 @login_required
 def messages_create(topic_id):
@@ -96,7 +95,6 @@ def messages_create(topic_id):
     return redirect("/topics/" + topic_id + "/")
 
 
-# add a reply to a message
 @app.route("/topics/<topic_id>/messages/<message_id>/reply", methods=["POST"])
 @login_required
 def messages_reply(topic_id, message_id):
