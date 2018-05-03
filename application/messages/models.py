@@ -52,3 +52,16 @@ class Message(Base):
                 "author": row[3], "content": row[4], "topic_id": row[7]})
 
         return response
+
+    @staticmethod
+    def find_all(search_term):
+
+        searching_for = '%' + search_term + '%'
+
+        stmt = text("SELECT * FROM Message"
+                    " WHERE Message.author LIKE :search"
+                    " OR Message.content LIKE :search"
+                    " LIMIT 10").params(search=searching_for)
+        res = db.engine.execute(stmt)
+
+        return res

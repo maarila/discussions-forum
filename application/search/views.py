@@ -16,6 +16,7 @@ def search_index():
 def search_topic():
     topics = []
     messages = []
+    results = []
 
     form = SearchForm(request.form)
     search_term = form.search_phrase.data
@@ -31,11 +32,11 @@ def search_topic():
     elif searching_for == "author":
         messages = Message.query.filter(
             Message.author.like("%" + search_term + "%")).all()
-    else:
-        results = Topic.find_topics_or_messages(search_term)
+    elif searching_for == "all":
+        results = Message.find_all(search_term)
 
     return render_template("search/search.html", topics=topics, messages=messages,
-                           form=SearchForm())
+                           results=results, form=SearchForm())
 
 
 @app.route("/search/topic/date", methods=["POST"])

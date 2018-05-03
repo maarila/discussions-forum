@@ -43,25 +43,6 @@ class Topic(Base):
         return response
 
     @staticmethod
-    def find_all(search_term):
-
-        searching_for = '%' + search_term + '%'
-
-        stmt = text("SELECT * FROM Topic, Message"
-                    " WHERE Topic.creator LIKE :search"
-                    " OR Message.author LIKE :search"
-                    " LIMIT 10").params(search=searching_for)
-        res = db.engine.execute(stmt)
-
-        response = []
-
-        for row in res:
-            response.append({"id": row[0], "date_created": row[
-                            1], "title": row[3], "creator": row[4]})
-
-        return response
-
-    @staticmethod
     def find_latest_postgre():
         stmt = text("SELECT Topic.id, Topic.title, x.id AS msg_id, x.content, x.date_created FROM"
                     " (SELECT DISTINCT ON(Message.topic_id) Message.id, Message.content,"

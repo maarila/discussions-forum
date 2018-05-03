@@ -8,7 +8,7 @@
   <input type="submit" value="Search" /><br />
   {% for button in form.searching_for %} 
     {{ button }} {{ button.label }}
-  {% endfor %}
+  {% endfor %} 
   <br />
   <ul>
     {% for error in form.search_phrase.errors %}
@@ -48,6 +48,14 @@
   <small>Message sent @ {{ msg.date_created }}:</small>
   <div style="width: 60%">
     <a href="/topics/{{ msg.topic_id }}/messages/{{ msg.id }}">{{ msg.content }}</a>
+  </div>
+  {% endfor %}
+
+{% elif results %}
+  {% for res in results %}
+  <small>Message by {{ res.author }}:</small>
+  <div style="width: 60%">
+    <a href="/topics/{{ res.topic_id }}/messages/{{ res.id }}">{{ res.content }}</a>
   </div>
   {% endfor %}
 {% endif %}
