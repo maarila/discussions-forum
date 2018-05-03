@@ -5,7 +5,7 @@
 
 <form method="POST" action="{{ url_for('topics_edit', topic_id=topic.id) }}">
   Topic to edit: <br />
-  {{ form.title }}<br />
+  {{ form.title(size=50) }}<br />
 
   <ul>
     {% for error in form.title.errors %}

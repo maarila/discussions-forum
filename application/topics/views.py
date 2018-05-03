@@ -22,7 +22,7 @@ def mark_messages_read(messages):
                         " VALUES (:user_id, :message_id)"
                         " ON CONFLICT DO NOTHING"
                         ).params(user_id=user_id, message_id=message_id)
-        res = db.engine.execute(stmt)
+            res = db.engine.execute(stmt)
     else:
         for row in messages:
             message_id = row.id

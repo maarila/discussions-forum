@@ -4,9 +4,9 @@
 
 <strong>Search by keyword</strong>
 <form method="POST" action="{{ url_for('search_topic') }}">
-  {{ form.search_phrase }}
+  {{ form.search_phrase(size=30) }}
   <input type="submit" value="Search" /><br />
-  {% for button in form.searching_for%} 
+  {% for button in form.searching_for %} 
     {{ button }} {{ button.label }}
   {% endfor %}
   <br />

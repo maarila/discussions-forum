@@ -3,17 +3,17 @@
 {% block body %}
   <table style="width:75%;border-collapse: separate;border-spacing: 9px">
     <tr>
-      <th align="left">Message</th>
       <th align="left">Delete?</th>
+      <th align="left">Message</th>
     </tr>
     {% for message in messages.items %}
     <tr>
-      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a></td>
       <td>
         <form method="POST" action="{{ url_for('messages_delete', message_id=message.id) }}">
           <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
         </form>
       </td>
+      <td><a href="/messages/{{message.id}}/">{{ message.content }}</a></td>
     </tr>
     {% endfor %}
   </table>

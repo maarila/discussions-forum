@@ -5,7 +5,7 @@
 
 <form method="POST" action="{{ url_for('messages_edit', message_id=message.id) }}">
   Message for editing: <br />
-  {{ form.name(cols="60", rows="6") }}<br />
+  {{ form.name(cols="70", rows="9") }}<br />
 
   <ul>
     {% for error in form.name.errors %}
