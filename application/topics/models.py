@@ -43,7 +43,7 @@ class Topic(Base):
         return response
 
     @staticmethod
-    def find_topics_or_messages(search_term):
+    def find_all(search_term):
 
         searching_for = '%' + search_term + '%'
 
@@ -56,16 +56,16 @@ class Topic(Base):
         response = []
 
         for row in res:
-            print(row)
-            # response.append({"id": row[0], "date_created": row[
-            #                 1], "title": row[3], "creator": row[4]})
+            response.append({"id": row[0], "date_created": row[
+                            1], "title": row[3], "creator": row[4]})
 
         return response
 
     @staticmethod
     def find_latest_postgre():
         stmt = text("SELECT Topic.id, Topic.title, x.id AS msg_id, x.content, x.date_created FROM"
-                    " (SELECT DISTINCT ON(Message.topic_id) Message.id, Message.content, Message.date_created, Message.topic_id FROM Message"
+                    " (SELECT DISTINCT ON(Message.topic_id) Message.id, Message.content,"
+                    " Message.date_created, Message.topic_id FROM Message"
                     " ORDER BY Message.topic_id, Message.date_created DESC"
                     " LIMIT 5) AS x"
                     " INNER JOIN Topic ON Topic.id = x.topic_id"
@@ -76,13 +76,14 @@ class Topic(Base):
 
         for row in res:
             response.append({"topic_id": row[0], "topic_title": row[1], "msg_id": row[
-                            2], "msg_content": reduce_msg(row[3]), "msg_created": datetime.strptime(row[4], '%Y-%m-%d %H:%M:%S.%f').strftime('%d.%m.%Y %-H:%M')})
+                            2], "msg_content": reduce_msg(row[3]), "msg_created": row[4]})
 
         return response
 
     @staticmethod
     def find_latest_sql():
-        stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content, Message.date_created FROM Topic"
+        stmt = text("SELECT Topic.id, Topic.title, Message.id, Message.content,"
+                    " Message.date_created FROM Topic"
                     " INNER JOIN Message ON Topic.id = Message.topic_id"
                     " GROUP BY Topic.id"
                     " ORDER BY Message.date_created DESC"

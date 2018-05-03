@@ -2,12 +2,20 @@ from datetime import datetime
 
 from application import db
 from application.models import Base
+from application.auth.models import User
 
 from sqlalchemy.sql import text
 
 
-class Message(Base):
+views = db.Table('views',
+                 db.Column('account_id', db.Integer, db.ForeignKey(
+                     'account.id'), primary_key=True),
+                 db.Column('message_id', db.Integer, db.ForeignKey(
+                     'message.id'), primary_key=True)
+                 )
 
+
+class Message(Base):
     author = db.Column(db.String(144), nullable=True)
     content = db.Column(db.String(1023), nullable=False)
     read = db.Column(db.Boolean, nullable=False)
@@ -18,7 +26,10 @@ class Message(Base):
                          nullable=False)
 
     reply_id = db.Column(db.Integer, db.ForeignKey(
-        'message.id'), nullable=True)
+            'message.id'), nullable=True)
+
+    views = db.relationship('User', secondary=views, lazy='subquery',
+                            backref=db.backref('message', lazy=True))
 
     def __init__(self, content):
         self.content = content

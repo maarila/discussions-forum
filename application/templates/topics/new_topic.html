@@ -3,7 +3,7 @@
 {% block body %}
 <form method="POST" action="{{ url_for('topics_create') }}">
   {{ form.title.label}}<br />
-  {{ form.title }}<br />
+  {{ form.title(size=50) }}<br />
   <ul>
     {% for error in form.title.errors %}
     <li>{{ error }}</li>

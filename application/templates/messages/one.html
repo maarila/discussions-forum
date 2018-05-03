@@ -11,6 +11,15 @@
 {% if message.account_id == current_user.id %}
   <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
 {% endif%}
+<div>
+  <small>Read by:
+  {% for view in message.views %}
+    {% if view.id != message.account_id %} 
+      <a href="/users/{{ view.id }}/">{{ view.name }}&nbsp;&nbsp;</a>
+    {% endif %}
+  {% endfor %}
+  </small>
+</div>
 
 <hr>
 
@@ -28,6 +37,15 @@
   {% if reply.account_id == current_user.id %}
   <a href="/messages/{{ reply.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
   {% endif%}
+  <div>
+    <small>Read by:
+    {% for view in reply.views %}
+      {% if view.id != reply.account_id %} 
+        <a href="/users/{{ view.id }}/">{{ view.name }}&nbsp;&nbsp;</a>
+      {% endif %}
+    {% endfor %}
+    </small>
+  </div>
 
   <hr>
 
@@ -35,13 +53,13 @@
 
 <form method="POST" action="/topics/{{ topic.id }}/messages/{{ message.id }}/reply">
   Reply to message:<br />
-  {{ form.name(cols="60", rows="6") }}<br />
+  {{ form.name(cols="70", rows="9") }}<br />
   <ul>
     {% for error in form.name.errors %}
       <li>{{ error }}</li>
     {% endfor %}
   </ul>
-  <input type="submit" value="Reply" />
+  <input type="submit" class="btn btn-outline-primary" value="Reply" />
 </form>
 
 {% endblock %}

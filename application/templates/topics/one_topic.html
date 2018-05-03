@@ -3,16 +3,13 @@
 {% block body %}
 
 <h2>{{ topic.title }}</h2>
-
-<small>
-  <i>
-  Discussion started by {{ topic.creator }} on {{ topic.date_created.strftime('%d.%m.%Y')}}.</i>
-</small>
+<small><i>
+  Discussion started by {{ topic.creator }} on {{ topic.date_created.strftime('%d.%m.%Y')}}.</i></small>
 
 <hr>
 
 <div style="width:60%">
-  {% if messages %}
+  {% if messages.items %}
     {% for message in messages.items %}
     <div>
       <div>
@@ -24,29 +21,38 @@
         <small>
           <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies.</a>
         </small>
+
+
         {% if message.account_id == current_user.id %}
         <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit reply</a>
         {% endif%}
+        <div><small>
+          Read by:
+          {% for view in message.views %}
+            {% if view.id != message.account_id %} 
+              <a href="/users/{{ view.id }}/">{{ view.name }}&nbsp;&nbsp;</a>
+            {% endif %}
+          {% endfor %}
+        </small></div>
         <hr>      
-
       </div>
     </div>
     {% endfor %}
   {% else %}
   <div>
-    <p>No messages yet in this topic. Please feel free to start the discussion!</p>
+    <p><i>No messages yet in this topic. Please feel free to start the discussion!</i></p>
   </div>
   {% endif %}
 </div>
 
 <div>
   {% for page in messages.iter_pages() %}
-  {% if page != messages.page %}
-  <a href="{{ url_for('topics_get_one_paginated', topic_id=topic.id, page=page) }}">
-  {{ page }}</a>
-  {% else %}
-  {{ page }}
-  {% endif %}
+    {% if page != messages.page %}
+      <a href="{{ url_for('topics_get_one_paginated', topic_id=topic.id, page=page) }}">
+      {{ page }}</a>
+    {% else %}
+      {{ page }}
+    {% endif %}
   {% endfor %}
 </div>
 
@@ -54,13 +60,13 @@
 
 <form method="POST" action="/topics/{{ topic.id }}/messages/new">
   Add a new message to the topic:<br />
-  {{ form.name(cols="60", rows="6") }}<br />
+  {{ form.name(cols="70", rows="9") }}<br />
   <ul>
     {% for error in form.name.errors %}
     <li>{{ error }}</li>
     {% endfor %}
   </ul>
-  <input type="submit" value="Add message" />
+  <input type="submit" class="btn btn-outline-primary" value="Add message" />
 </form>
 
 {% endblock %}

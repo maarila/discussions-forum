@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.topics.models import Topic
+from application.topics.views import mark_messages_read
 from application.messages.models import Message
 from application.messages.forms import MessageForm
 
@@ -10,7 +11,7 @@ from application.messages.forms import MessageForm
 @app.route("/messages/", methods=["GET"])
 @login_required
 def messages_index(page=1):
-    per_page = 5
+    per_page = 10
     messages = Message.query.order_by(Message.date_created.desc()).paginate(
         page, per_page, False)
     return render_template("messages/list.html", messages=messages)
@@ -66,9 +67,13 @@ def messages_delete(message_id):
 @app.route("/topics/<topic_id>/messages/<message_id>/", methods=["GET"])
 @login_required
 def messages_read_one(topic_id, message_id):
+
+    replies = Message.query.filter_by(reply_id=message_id).all()
+    mark_messages_read(replies)
+
     return render_template("messages/one.html", topic=Topic.query.get(topic_id),
                            form=MessageForm(), message=Message.query.get(message_id),
-                           replies=Message.query.filter_by(reply_id=message_id).all())
+                           replies=replies)
 
 
 # add a message to topic
