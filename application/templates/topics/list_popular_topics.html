@@ -2,14 +2,14 @@
 
 {% block body %}
 <h2>Welcome to the Forum!</h2>
-<strong>Five most popular topics for discussion:</strong>
+<strong>Most popular topics:</strong>
 <div>
   <small>
     <a href="{{ url_for('topics_index') }}"">[Show newest]</a>
     [Show most popular]
     <a href="{{ url_for('topics_all') }}">[Show all]</a>
-    For test purposes -->
-    <a href="{{ url_for('topics_popular_sql') }}">[Show latest (for local SQLite only!)]</a>  
+    <!-- For local SQLite only -->
+    <!-- <a href="{{ url_for('topics_popular_sql') }}">[Show latest]</a> -->  
   </small>
 </div>
 <hr>

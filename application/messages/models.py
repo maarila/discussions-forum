@@ -60,7 +60,7 @@ class Message(Base):
         stmt = text("SELECT * FROM Message"
                     " WHERE Message.author LIKE :search"
                     " OR Message.content LIKE :search"
-                    " LIMIT 10").params(search=searching_for)
+                    " LIMIT 50").params(search=searching_for)
         res = db.engine.execute(stmt)
 
         return res
