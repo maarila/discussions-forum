@@ -16,9 +16,8 @@ views = db.Table('views',
 
 
 class Message(Base):
-    author = db.Column(db.String(144), nullable=True)
-    content = db.Column(db.String(1023), nullable=False)
-    read = db.Column(db.Boolean, nullable=False)
+    author = db.Column(db.String(64), nullable=True)
+    content = db.Column(db.String(2048), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
                            nullable=False)
 
