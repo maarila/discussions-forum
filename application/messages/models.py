@@ -55,7 +55,6 @@ class Message(Base):
 
     @staticmethod
     def find_all(search_term):
-
         searching_for = '%' + search_term + '%'
 
         stmt = text("SELECT * FROM Message"
@@ -65,3 +64,15 @@ class Message(Base):
         res = db.engine.execute(stmt)
 
         return res
+
+    @staticmethod
+    def message_count(user_id):
+        stmt = text("SELECT COUNT(*) AS messages FROM Message"
+                    " WHERE Message.account_id = :user_id").params(user_id=user_id)
+        res = db.engine.execute(stmt)
+
+        count = 0
+        for row in res:
+            count += row[0]
+
+        return count

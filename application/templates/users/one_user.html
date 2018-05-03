@@ -2,7 +2,13 @@
 
 {% block body %}
 
-<h2>{{ user.username }}</h2>
-Actual name: {{ user.name }}
+<h2>Username: {{ user.username }}</h2>
+<ul>
 
+  <li>Full name: {{ user.name }}</li>
+  {% if user.date_created %}
+    <li>Joined forum: {{ user.date_created.strftime('%d.%m.%Y %-H:%M') }}</li>
+  {% endif %}
+  <li>Messages on forum: {{ count }}</li>
+</ul>
 {% endblock %}

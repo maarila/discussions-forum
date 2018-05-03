@@ -16,7 +16,9 @@ def users_index():
 @app.route("/users/<user_id>/", methods=["GET"])
 @login_required
 def users_get_one(user_id):
-    return render_template("users/one_user.html", user=User.query.get(user_id))
+    message_count = Message.message_count(user_id)
+    return render_template("users/one_user.html", count=message_count,
+                           user=User.query.get(user_id))
 
 
 @app.route("/users/<user_id>/", methods=["POST"])
