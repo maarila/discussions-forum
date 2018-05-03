@@ -76,3 +76,26 @@ class Message(Base):
             count += row[0]
 
         return count
+
+    @staticmethod
+    def find_latest(user_id):
+        stmt = text("SELECT m.id, m.date_created, m.content, m.topic_id, Topic.title FROM Message AS m"
+                    " INNER JOIN Topic ON m.topic_id = topic.id"
+                    " WHERE m.account_id = :user_id"
+                    " ORDER BY m.date_created DESC"
+                    " LIMIT 1").params(user_id=user_id)
+        res = db.engine.execute(stmt)
+
+        response = {}
+
+        for row in res:
+            content = row[2]
+            if len(content) > 50:
+                content = content[:32] + "..."
+            response["id"] = row[0]
+            response["date_created"] = row[1]
+            response["content"] = content
+            response["topic_id"] = row[3]
+            response["topic_title"] = row[4]
+
+        return response

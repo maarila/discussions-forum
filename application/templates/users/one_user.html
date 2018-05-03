@@ -10,5 +10,8 @@
     <li>Joined forum: {{ user.date_created.strftime('%d.%m.%Y %-H:%M') }}</li>
   {% endif %}
   <li>Messages on forum: {{ count }}</li>
+  {% if latest %}
+  <li>Latest message: <a href="{{ url_for('messages_read_one', topic_id=latest.topic_id, message_id=latest.id) }}"> {{ latest.content }}</a> in topic <a href="{{ url_for('topics_get_one', topic_id=latest.topic_id) }}"> {{ latest.topic_title }}</a></li>
+  {% endif %}
 </ul>
 {% endblock %}

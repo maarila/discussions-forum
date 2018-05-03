@@ -17,8 +17,9 @@ def users_index():
 @login_required
 def users_get_one(user_id):
     message_count = Message.message_count(user_id)
+    latest = Message.find_latest(user_id)
     return render_template("users/one_user.html", count=message_count,
-                           user=User.query.get(user_id))
+                           latest=latest, user=User.query.get(user_id))
 
 
 @app.route("/users/<user_id>/", methods=["POST"])
