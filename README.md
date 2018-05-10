@@ -13,6 +13,6 @@ Järjestelmän ylläpitäjällä on oma liittymä, jonka kautta hän ylläpitä�
 - [x] Kirjoitusten poistaminen
 - [x] Aiheiden määrittely, muokkaus ja poisto
 
-[Dokumentaatio (sis. kirjautumisohjeen Herokuun)](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Dokumentaatio.md)
+[Dokumentaatio](https://github.com/maarila/keskustelufoorumi/tree/master/documentation/Dokumentaatio.md)
 
 Sovellus Herokussa: https://foorumi-tsoha.herokuapp.com/
