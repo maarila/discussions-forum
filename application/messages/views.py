@@ -40,7 +40,7 @@ def messages_edit(message_id):
     form = MessageForm(request.form)
 
     if not form.validate():
-        return render_template("messages/edit.html", form=MessageForm(name=form.name.data),
+        return render_template("messages/edit.html", form=form,
                                message=Message.query.get(message_id))
 
     m = Message.query.get(message_id)
@@ -82,7 +82,11 @@ def messages_create(topic_id):
     form = MessageForm(request.form)
 
     if not form.validate():
-        return render_template("messages/new.html", form=form)
+        return render_template("topics/one_topic.html", form=form,
+                               topic=Topic.query.get(topic_id),
+                               messages=Message.query.filter_by(
+                                   topic_id=topic_id, reply_id=None)
+                               .paginate(page=1, per_page=5, error_out=False))
 
     m = Message(form.name.data)
     m.author = current_user.name
@@ -101,7 +105,9 @@ def messages_reply(topic_id, message_id):
     form = MessageForm(request.form)
 
     if not form.validate():
-        return render_template("messages/new.html", form=form)
+        return render_template("messages/one.html", topic=Topic.query.get(topic_id),
+                               form=form, message=Message.query.get(message_id),
+                               replies=Message.query.filter_by(reply_id=message_id).all())
 
     reply = Message(form.name.data)
     reply.author = current_user.name

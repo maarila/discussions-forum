@@ -22,7 +22,7 @@ def search_topic():
     search_term = form.search_phrase.data
 
     if not form.validate():
-        return redirect(url_for('search_index'))
+        return render_template("search/search.html", form=form)
 
     searching_for = form.searching_for.data
 

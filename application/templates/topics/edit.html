@@ -3,15 +3,15 @@
 {% block body %}
 <a href="{{ url_for('topics_index') }}">< Return without saving</a><hr>
 
+<ul>
+  {% for error in form.title.errors %}
+    <li style="color: red">{{ error }}</li>
+  {% endfor %}
+</ul>
+
 <form method="POST" action="{{ url_for('topics_edit', topic_id=topic.id) }}">
   Topic to edit: <br />
   {{ form.title(size=50) }}<br />
-
-  <ul>
-    {% for error in form.title.errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-  </ul>
   <input class="btn btn-outline-primary btn-sm" type="submit" value="Save edited title" />
 </form>
 {% endblock %}

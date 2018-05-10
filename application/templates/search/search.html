@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<ul>
+  {% for error in form.search_phrase.errors %}
+    <li style="color: red">{{ error }}</li>
+  {% endfor %}
+</ul>
 
 <strong>Search by keyword</strong>
 <form method="POST" action="{{ url_for('search_topic') }}">
@@ -10,14 +15,9 @@
     {{ button }} {{ button.label }}
   {% endfor %} 
   <br />
-  <ul>
-    {% for error in form.search_phrase.errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-  </ul>
 </form>
 
-<strong>Search by date:</strong>
+<strong>Search messages by date:</strong>
 <form method="POST" action="{{ url_for('search_topic_by_date') }}">
   From:
   <input type="date" name="start" id="start" />

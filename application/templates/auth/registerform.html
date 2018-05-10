@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div style="color: red">
   <ul>
     {% for error in form.name.errors %}
     <li><b>Name:</b> {{ error }}</li>
@@ -16,6 +17,7 @@
   <li><b>Password:</b> {{ error }}</li>
   {% endfor %}
 </ul>
+</div>
 
 <form method="POST" action="{{ url_for('auth_new_register') }}">
   <table>

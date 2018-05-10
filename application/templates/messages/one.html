@@ -49,14 +49,15 @@
 {% endfor %}
 </div>
 
+<ul>
+  {% for error in form.name.errors %}
+    <li style="color: red">{{ error }}</li>
+  {% endfor %}
+</ul>
+
 <form method="POST" action="/topics/{{ topic.id }}/messages/{{ message.id }}/reply">
   Reply to message:<br />
   {{ form.name(cols="70", rows="9") }}<br />
-  <ul>
-    {% for error in form.name.errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-  </ul>
   <input type="submit" class="btn btn-outline-primary" value="Reply" />
 </form>
 {% endblock %}

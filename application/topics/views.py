@@ -108,7 +108,7 @@ def topics_get_for_edit(topic_id):
 def topics_edit(topic_id):
     form = TopicForm(request.form)
     if not form.validate():
-        return render_template("topics/edit.html", form=TopicForm(title=form.title.data),
+        return render_template("topics/edit.html", form=form,
                                topic=Topic.query.get(topic_id))
 
     t = Topic.query.get(topic_id)
@@ -125,9 +125,9 @@ def topics_edit(topic_id):
 def topics_delete(topic_id):
 
     if current_user.admin:
-      Message.query.filter_by(topic_id=topic_id).delete()
-      Topic.query.filter_by(id=topic_id).delete()
-      db.session().commit()
+        Message.query.filter_by(topic_id=topic_id).delete()
+        Topic.query.filter_by(id=topic_id).delete()
+        db.session().commit()
 
     return redirect("/")
 
@@ -144,7 +144,7 @@ def topics_create():
     t.creator = current_user.name
 
     if current_user.admin:
-      db.session().add(t)
-      db.session().commit()
+        db.session().add(t)
+        db.session().commit()
 
     return redirect(url_for("topics_index"))
