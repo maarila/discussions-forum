@@ -112,9 +112,9 @@ def topics_edit(topic_id):
                                topic=Topic.query.get(topic_id))
 
     t = Topic.query.get(topic_id)
-    t.title = form.title.data
 
     if current_user.admin:
+        t.title = form.title.data
         db.session.commit()
 
     return redirect(url_for("topics_index"))
@@ -124,10 +124,10 @@ def topics_edit(topic_id):
 @login_required(role="ANY")
 def topics_delete(topic_id):
 
-    Message.query.filter_by(topic_id=topic_id).delete()
-    Topic.query.filter_by(id=topic_id).delete()
-
-    db.session().commit()
+    if current_user.admin:
+      Message.query.filter_by(topic_id=topic_id).delete()
+      Topic.query.filter_by(id=topic_id).delete()
+      db.session().commit()
 
     return redirect("/")
 
@@ -143,7 +143,8 @@ def topics_create():
     t = Topic(form.title.data)
     t.creator = current_user.name
 
-    db.session().add(t)
-    db.session().commit()
+    if current_user.admin:
+      db.session().add(t)
+      db.session().commit()
 
     return redirect(url_for("topics_index"))

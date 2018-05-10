@@ -26,8 +26,10 @@ def users_get_one(user_id):
 @login_required
 def users_set_admin(user_id):
     u = User.query.get(user_id)
-    u.admin = not u.admin
-    db.session().commit()
+
+    if current_user.admin:
+        u.admin = not u.admin
+        db.session().commit()
 
     return redirect(url_for("users_index"))
 
@@ -38,7 +40,8 @@ def users_delete(user_id):
     Message.query.filter_by(account_id=user_id).delete()
     u = User.query.get(user_id)
 
-    db.session.delete(u)
-    db.session().commit()
+    if current_user.admin:
+        db.session.delete(u)
+        db.session().commit()
 
     return redirect(url_for("users_index"))
