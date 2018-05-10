@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 
-from application import app, db, login_required
+from application import app, db
 from application.topics.models import Topic
 from application.topics.forms import TopicForm
 
@@ -53,13 +53,13 @@ def topics_all_paginated(page=1):
 
 
 @app.route("/topics/new/", methods=["GET"])
-@login_required(role="ADMIN")
+@login_required
 def topics_form():
     return render_template("topics/new_topic.html", form=TopicForm())
 
 
 @app.route("/topics/<topic_id>/", methods=["GET"])
-@login_required(role="ANY")
+@login_required
 def topics_get_one(topic_id, page=1):
     per_page = 5
 
@@ -75,7 +75,7 @@ def topics_get_one(topic_id, page=1):
 
 
 @app.route("/topics/<topic_id>/<int:page>", methods=["GET"])
-@login_required(role="ANY")
+@login_required
 def topics_get_one_paginated(topic_id, page=1):
     per_page = 5
 
@@ -90,7 +90,7 @@ def topics_get_one_paginated(topic_id, page=1):
 
 
 @app.route("/topics/<topic_id>/edit/", methods=["GET"])
-@login_required(role="ADMIN")
+@login_required
 def topics_get_for_edit(topic_id):
     topic = Topic.query.get(topic_id)
     return render_template("topics/edit.html", form=TopicForm(title=topic.title),
@@ -98,7 +98,7 @@ def topics_get_for_edit(topic_id):
 
 
 @app.route("/topics/<topic_id>/edit/", methods=["POST"])
-@login_required(role="ADMIN")
+@login_required
 def topics_edit(topic_id):
     form = TopicForm(request.form)
     if not form.validate():
@@ -115,7 +115,7 @@ def topics_edit(topic_id):
 
 
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
-@login_required(role="ANY")
+@login_required
 def topics_delete(topic_id):
 
     if current_user.admin:
@@ -127,7 +127,7 @@ def topics_delete(topic_id):
 
 
 @app.route("/topics/new/", methods=["POST"])
-@login_required(role="ADMIN")
+@login_required
 def topics_create():
     form = TopicForm(request.form)
 
