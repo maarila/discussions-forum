@@ -1,13 +1,19 @@
 ## Dokumentaatio
 
-#### Tietokantakaavio
+### Kirjautuminen Herokuun
 
-[[https://github.com/maarila/keskustelufoorumi/tree/master/documentation/img/Tietokantakaavio.png]]
+Pääkäyttäjän tunnus: _hello_, salasana: _world_
+Normaalikäyttäjän tunnus: _gandalf_, salasana: _klonkku_
 
-#### Tietokannan luominen
+### Tietokantakaavio
 
-__Käyttäjät:__
+![Tietokantakaavio](https://github.com/maarila/keskustelufoorumi/blob/master/documentation/img/Tietokantakaavio.png)
 
+### Tietokannan luominen
+
+*Käyttäjät:*
+
+```
 CREATE TABLE account (
   id INTEGER NOT NULL, 
   date_created DATETIME, 
@@ -19,9 +25,11 @@ CREATE TABLE account (
   PRIMARY KEY (id), 
   CHECK (admin IN (0, 1))
 );
+```
 
-__Aihealueet:__
+*Aihealueet:*
 
+```
 CREATE TABLE topic (
   id INTEGER NOT NULL, 
   date_created DATETIME, 
@@ -30,9 +38,11 @@ CREATE TABLE topic (
   creator VARCHAR(64) NOT NULL, 
   PRIMARY KEY (id)
 );
+```
 
-__Viestit:__
+*Viestit:*
 
+```
 CREATE TABLE message (
   id INTEGER NOT NULL, 
   date_created DATETIME, 
@@ -47,9 +57,11 @@ CREATE TABLE message (
   FOREIGN KEY(topic_id) REFERENCES topic (id), 
   FOREIGN KEY(reply_id) REFERENCES message (id)
 );
+```
 
-__Käyttäjien ja viestien välinen liitostaulu:__
+*Käyttäjien ja viestien välinen liitostaulu:*
 
+```
 CREATE TABLE views (
   account_id INTEGER NOT NULL, 
   message_id INTEGER NOT NULL, 
@@ -57,10 +69,11 @@ CREATE TABLE views (
   FOREIGN KEY(account_id) REFERENCES account (id), 
   FOREIGN KEY(message_id) REFERENCES message (id)
 );
+```
 
 ### Käyttötapaukset / käyttäjätarinat
 
-__Tavallinen käyttäjä:__
+*Tavallinen käyttäjä:*
 
 - [x] Käyttäjänä voin luoda itselleni käyttäjätunnukset.
 
@@ -194,17 +207,20 @@ SELECT COUNT(*) AS messages FROM Message
 WHERE Message.account_id = halutun_käyttäjän_id;
 ```
 
-__Ylläpitäjä:__
+*Ylläpitäjä:*
 
 Kaikkien edellämainittujen lisäksi:
 
 - [x] Ylläpitäjänä voin luoda uusia käyttäjiä.
 
-INSERT INTO Account (name, username, password, admin) VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);
+```
+INSERT INTO Account (name, username, password, admin) 
+VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);
+```
 
 - [x] Ylläpitäjänä voin perustaa uusia aihealueita.
 
-INSERT INTO Topic (title) VALUES ("Haluttu otsikko");
+`INSERT INTO Topic (title) VALUES ("Haluttu otsikko");`
 
 - [x] Ylläpitäjänä voin muokata aihealueita.
 
@@ -238,25 +254,25 @@ UPDATE Account SET admin=joko_nolla_tai_yksi
 WHERE Account.id = muokattavan_käyttäjän_id;
 ```
 
-#### Käyttöohje
+### Käyttöohje
 
-__Tavallisen käyttäjän ohjeet__
+*Tavallisen käyttäjän ohjeet*
 
-Sovelluksen etusivulla näkyvät viisi viimeisintä keskustelun aihetta uusimmasta vanhimpaan. Valitse ylävalikon oikeasta yläkulmasta __Register__ ja kirjaudu järjestelmään haluamallasi nimellä, käyttäjätunnuksella ja salasanalla. Nimessä on oltava 4-48 merkkiä, käyttäjätunnuksessa 4-24 merkkiä ja salasanassa 6-255 merkkiä. Valitse tämän jälken __Login__ ja kirjaudu sovellukseen luomillasi tunnuksilla.
+Sovelluksen etusivulla näkyvät viisi viimeisintä keskustelun aihetta uusimmasta vanhimpaan. Valitse ylävalikon oikeasta yläkulmasta *Register* ja kirjaudu järjestelmään haluamallasi nimellä, käyttäjätunnuksella ja salasanalla. Nimessä on oltava 4-48 merkkiä, käyttäjätunnuksessa 4-24 merkkiä ja salasanassa 6-255 merkkiä. Valitse tämän jälken *Login* ja kirjaudu sovellukseen luomillasi tunnuksilla.
 
-Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien viestien listauksen kautta tai kaikki viestit listaamalla. Aihealueen avattuasi voit kirjoittaa aihealueeseen uuden vastineen tai selata muihin vastineisiin tulleita viestien perässä olevien **Replies**-listauksen tai ***View all replies***-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin ***View all replies***. Omien vastaustesi perästä löydät __Edit__-napin, jolla voit muokata kirjoittamiasi viestejä.
+Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien viestien listauksen kautta tai kaikki viestit listaamalla. Aihealueen avattuasi voit kirjoittaa aihealueeseen uuden vastineen tai selata muihin vastineisiin tulleita viestien perässä olevien _Replies_-listauksen tai _View all replies_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies_. Omien vastaustesi perästä löydät *Edit*-napin, jolla voit muokata kirjoittamiasi viestejä.
 
 Viestin lopusta näet myös käyttäjät, jotka ovat viestin jo lukeneet.
 
-Sivuston ylävalikon __Search__-toiminnon valitsemalla voi etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös etsiä viestejä tietyltä ajanjaksolta.
+Sivuston ylävalikon *Search*-toiminnon valitsemalla voi etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös etsiä viestejä tietyltä ajanjaksolta.
 
-__Pääkäyttäjän ohjeet__
+*Pääkäyttäjän ohjeet*
 
-Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta __Login__ ja syötä pääkäyttäjän tunnukset. Mikäli käytät sovellusta Herokussa, syötä  käyttäjätunnukseksi __hello__ sekä salasanaksi __world__. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
+Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta *Login* ja syötä pääkäyttäjän tunnukset. Mikäli käytät sovellusta Herokussa, syötä  käyttäjätunnukseksi _hello_ sekä salasanaksi _world_. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
 
-Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen pääsivun kautta. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. __Add user__-toiminnallisuudella voi lisätä uusia käyttäjiä, __Create topic__-toiminnallisuudella voi luoda uusia aihealueita, __Show all messages__-toiminto listaa kaikki viestit ja mahdollistaa niiden poistamisen, __Show all users__ puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
+Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen pääsivun kautta. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. *Add user*-toiminnallisuudella voi lisätä uusia käyttäjiä, *Create topic*-toiminnallisuudella voi luoda uusia aihealueita, *Show all messages*-toiminto listaa kaikki viestit ja mahdollistaa niiden poistamisen, *Show all users* puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
 
-#### Asennusohje
+### Asennusohje
 
 Avaa terminaali ja siirry hakemistoon, johon haluat asentaa sovelluksen. Lataa sovellus koneellesi gitin kloonina:
 
@@ -288,18 +304,18 @@ INSERT INTO Account (name, username, password admin) VALUES ('Haluttu nimi', 'k�
 
 Ohjelmistoa voi nyt käyttää. Avaa haluamallasi selaimella (ohjelmiston toimivuus on testattu Google Chromella) osoite http://localhost:5000.
 
-#### Työn ja sovelluksen rajoitteet
+### Työn ja sovelluksen rajoitteet
 
 
 
-#### Puuttuvat ominaisuudet
+### Puuttuvat ominaisuudet
 
 
 
-#### Dokumentaation vastaavuus toteutettuun työhön
+### Dokumentaation vastaavuus toteutettuun työhön
 
 Tietokannassa käyttäjä-, aihealue- ja viestitauluilla on sarake "date_modified", mutta sitä ei ole implementoitu itse sovellukseen. En kuitenkaan poistanut sitä tietokannan luomisesta, koska muokkaustieto on tarpeellinen sovelluksen jatkokehityksen kannalta.
 
-#### Omat kokemukset
+### Omat kokemukset
 
 Valitsin esimerkkiaiheista kiinnostavalta ja selkeältä tuntuneen keskustelufoorumin. En muokannut määrittelytekstiä juurikaan, jolloin siihen jäi myös lause "lukija voi seurata vastinepolkua" kirjoitusten lukemisen suhteen. Näin jälkiviisaana voin todeta, että kyseisen lauseen poisjättäminen tai sen muokkaaminen olisi ollut järkevä ratkaisu, koska se määritti sovelluksen toiminnallisuutta ja viestien esittämistä sekä käsittelyä lopulta kohtuuttoman paljon. 
