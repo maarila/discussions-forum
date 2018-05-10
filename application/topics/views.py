@@ -13,27 +13,6 @@ from sqlalchemy.sql import text
 import os
 
 
-def mark_messages_read(messages):
-    if os.environ.get("HEROKU"):
-        for row in messages:
-            message_id = row.id
-            user_id = current_user.id
-            stmt = text("INSERT INTO views (account_id, message_id)"
-                        " VALUES (:user_id, :message_id)"
-                        " ON CONFLICT DO NOTHING"
-                        ).params(user_id=user_id, message_id=message_id)
-            res = db.engine.execute(stmt)
-    else:
-        for row in messages:
-            message_id = row.id
-            user_id = current_user.id
-
-            stmt = text("INSERT OR IGNORE INTO views (account_id, message_id)"
-                        " VALUES (:user_id, :message_id)"
-                        ).params(user_id=user_id, message_id=message_id)
-            res = db.engine.execute(stmt)
-
-
 @app.route("/topics/", methods=["GET"])
 def topics_index():
     return render_template("topics/list_newest_topics.html",
@@ -55,10 +34,22 @@ def topics_popular_sql():
 
 
 @app.route("/topics/all/", methods=["GET"])
-def topics_all():
+def topics_all(page=1):
+    per_page = 10
+    topics = Topic.query.order_by(
+        Topic.date_created.desc()).paginate(page, per_page, False)
+
     return render_template("topics/list_all_topics.html",
-                           topics=Topic.query.order_by(
-                               Topic.date_created.desc()).all())
+                           topics=topics)
+
+
+@app.route("/topics/all/<int:page>", methods=["GET"])
+def topics_all_paginated(page=1):
+    per_page = 10
+    topics = Topic.query.order_by(
+        Topic.date_created.desc()).paginate(page, per_page, False)
+    return render_template("topics/list_all_topics.html",
+                           topics=topics)
 
 
 @app.route("/topics/new/", methods=["GET"])
@@ -148,3 +139,24 @@ def topics_create():
         db.session().commit()
 
     return redirect(url_for("topics_index"))
+
+
+def mark_messages_read(messages):
+    if os.environ.get("HEROKU"):
+        for row in messages:
+            message_id = row.id
+            user_id = current_user.id
+            stmt = text("INSERT INTO views (account_id, message_id)"
+                        " VALUES (:user_id, :message_id)"
+                        " ON CONFLICT DO NOTHING"
+                        ).params(user_id=user_id, message_id=message_id)
+            res = db.engine.execute(stmt)
+    else:
+        for row in messages:
+            message_id = row.id
+            user_id = current_user.id
+
+            stmt = text("INSERT OR IGNORE INTO views (account_id, message_id)"
+                        " VALUES (:user_id, :message_id)"
+                        ).params(user_id=user_id, message_id=message_id)
+            res = db.engine.execute(stmt)

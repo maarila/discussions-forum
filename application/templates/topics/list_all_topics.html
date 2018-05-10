@@ -13,7 +13,7 @@
   </small>
 </div>
 <hr>
-{% for topic in topics %}
+{% for topic in topics.items %}
 <div>
   <a href="/topics/{{topic.id}}/">{{ topic.title }}</a><br /><small>Topic started on {{ topic.date_created.strftime('%d.%m.%Y %-H:%M') }}</small>
 
@@ -32,4 +32,14 @@
 </div>
 <br />
 {% endfor %}
+
+<div>Page: 
+  {% for page in topics.iter_pages() %}
+    {% if page != topics.page %}
+      <a href="{{ url_for('topics_all_paginated', page=page) }}">{{ page }}</a>
+    {% else %}
+      {{ page }}
+    {% endif %}
+  {% endfor %}
+</div>
 {% endblock %}
