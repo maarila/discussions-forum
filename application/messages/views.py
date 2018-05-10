@@ -63,6 +63,17 @@ def messages_delete(message_id):
 
     return redirect(url_for("messages_index"))
 
+@app.route("/topics/<topic_id>/messages/<message_id>/delete/", methods=["POST"])
+@login_required
+def messages_delete_from_topic(topic_id, message_id):
+    m = Message.query.get(message_id)
+
+    if current_user.admin:
+        db.session.delete(m)
+        db.session.commit()
+
+    return redirect(url_for("topics_get_one", topic_id=topic_id))
+
 
 @app.route("/topics/<topic_id>/messages/<message_id>/", methods=["GET"])
 @login_required

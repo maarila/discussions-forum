@@ -49,6 +49,13 @@
   {% if reply.account_id == current_user.id %}
   <a href="/messages/{{ reply.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit your reply</a>
   {% endif%}
+
+  {% if current_user.admin %}
+  <form method="POST" action="{{ url_for('messages_delete_from_topic', topic_id=topic.id, message_id=reply.id) }}">
+    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+  </form>
+  {% endif %}
+
   <div>
     <small>Read by:
     {% for view in reply.views %}
