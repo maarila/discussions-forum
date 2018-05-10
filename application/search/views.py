@@ -28,10 +28,12 @@ def search_topic():
 
     if searching_for == "topic":
         topics = Topic.query.filter(
-            Topic.title.like("%" + search_term + "%")).all()
+            Topic.title.like("%" + search_term + "%")).order_by(
+            Topic.date_created.desc()).limit(30).all()
     elif searching_for == "author":
         messages = Message.query.filter(
-            Message.author.like("%" + search_term + "%")).all()
+            Message.author.like("%" + search_term + "%")).order_by(
+            Message.date_created.desc()).limit(30).all()
     elif searching_for == "all":
         results = Message.find_all(search_term)
 

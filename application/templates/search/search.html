@@ -37,7 +37,7 @@
 
 {% elif messages %}
   {% for message in messages %}
-  <small>Message by {{ message.author }}:</small>
+  <small>Message posted by {{ message.author }}:</small>
   <div style="width: 60%">
     <a href="/topics/{{ message.topic_id }}/messages/{{ message.id }}">{{ message.content }}</a>
   </div>
