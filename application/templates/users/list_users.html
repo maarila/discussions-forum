@@ -10,8 +10,9 @@
     <tr>
       <td><a href="/users/{{user.id}}/">{{ user.name }}</a></td>
       <td align="center">{{ user.admin }}</td>
+      {% if current_user.id != user.id %}
       <td>
-        <form method="POST" action="{{ url_for('users_set_admin', user_id=user.id) }}">
+        <form method="POST" action="{{ url_for('users_toggle_admin', user_id=user.id) }}">
           <input class="btn btn-outline-primary btn-sm" type="submit" value="Grant admin rights" />
         </form>
       </td>
@@ -20,6 +21,7 @@
           <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete user" />
         </form>
       </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

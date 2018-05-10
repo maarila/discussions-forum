@@ -10,7 +10,7 @@ from application.topics.models import Topic
 @app.route("/users/", methods=["GET"])
 @login_required
 def users_index():
-    return render_template("users/list_users.html", users=User.query.all())
+    return render_template("users/list_users.html", users=User.query.order_by(User.name).all())
 
 
 @app.route("/users/<user_id>/", methods=["GET"])
@@ -24,10 +24,10 @@ def users_get_one(user_id):
 
 @app.route("/users/<user_id>/", methods=["POST"])
 @login_required
-def users_set_admin(user_id):
+def users_toggle_admin(user_id):
     u = User.query.get(user_id)
 
-    if current_user.admin:
+    if current_user.admin and current_user.id != u.id:
         u.admin = not u.admin
         db.session().commit()
 
@@ -40,7 +40,7 @@ def users_delete(user_id):
     Message.query.filter_by(account_id=user_id).delete()
     u = User.query.get(user_id)
 
-    if current_user.admin:
+    if current_user.admin and current_user.id != u.id:
         db.session.delete(u)
         db.session().commit()
 
