@@ -63,12 +63,14 @@ def topics_form():
 def topics_get_one(topic_id, page=1):
     per_page = 5
 
+    
     messages = Message.query.filter_by(topic_id=topic_id, reply_id=None)
+    replies = Message.query.filter_by(topic_id=topic_id)
     mark_messages_read(messages)
 
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=messages
+                           replies=replies, messages=messages
                            .paginate(page, per_page, False))
 
 
@@ -78,11 +80,12 @@ def topics_get_one_paginated(topic_id, page=1):
     per_page = 5
 
     messages = Message.query.filter_by(topic_id=topic_id, reply_id=None)
+    replies = Message.query.filter_by(topic_id=topic_id)
     mark_messages_read(messages)
 
     return render_template("topics/one_topic.html", form=MessageForm(),
                            topic=Topic.query.get(topic_id),
-                           messages=messages
+                           replies=replies, messages=messages
                            .paginate(page, per_page, False))
 
 

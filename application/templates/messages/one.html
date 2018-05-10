@@ -6,7 +6,7 @@
 <hr>
 <small><a href="{{ url_for('users_get_one', user_id=message.account_id) }}"> {{ message.author }}</a> @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} </small>
       
-<div style="white-space: pre-line;">{{ message.content }}</div>
+<div style="white-space: pre-line;width:60%">{{ message.content }}</div>
 
 {% if message.account_id == current_user.id %}
   <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
@@ -27,10 +27,23 @@
 {% for reply in replies %}
   <small>Reply by <a href="{{ url_for('users_get_one', user_id=reply.account_id) }}"> {{ reply.author }}</a> @ {{ reply.date_created.strftime('%d.%m.%Y %-H:%M')}}</small>
       
-  <div style="white-space: pre-line;">{{ reply.content }}</div>
+  <p style="width:60%">{{ reply.content }}</p>
 
+  <div><small>
+    Replies:
+    {% for further_reply in further_replies %}
+    {% if further_reply.reply_id == reply.id %}
+    <div style="padding-left: 0.5em">
+      <a href="/topics/{{ topic.id }}/messages/{{ further_reply.id }}/">{{ further_reply.content|truncate(96) }}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </small></div>
+
+  <br />
+  
   <small>
-    <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">See replies or write a reply</a>
+    <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">View all replies or answer</a>
   </small>
 
   {% if reply.account_id == current_user.id %}

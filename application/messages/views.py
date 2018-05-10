@@ -69,11 +69,12 @@ def messages_delete(message_id):
 def messages_read_one(topic_id, message_id):
 
     replies = Message.query.filter_by(reply_id=message_id).all()
+    further_replies = Message.query.filter_by(topic_id=topic_id)
     mark_messages_read(replies)
 
     return render_template("messages/one.html", topic=Topic.query.get(topic_id),
                            form=MessageForm(), message=Message.query.get(message_id),
-                           replies=replies)
+                           replies=replies, further_replies=further_replies)
 
 
 @app.route("/topics/<topic_id>/messages/new", methods=["POST"])
@@ -106,8 +107,11 @@ def messages_reply(topic_id, message_id):
 
     if not form.validate():
         return render_template("messages/one.html", topic=Topic.query.get(topic_id),
-                               form=form, message=Message.query.get(message_id),
-                               replies=Message.query.filter_by(reply_id=message_id).all())
+                               form=form, message=Message.query.get(
+                                   message_id),
+                               replies=Message.query.filter_by(
+                                   reply_id=message_id).all(),
+                               further_replies=Message.query.filter_by(topic_id=topic_id))
 
     reply = Message(form.name.data)
     reply.author = current_user.name

@@ -11,14 +11,26 @@
 <div style="width:60%">
   {% if messages.items %}
     {% for message in messages.items %}
+    {% if message.reply_id == None %}
     <div>
       <div>
         <small><a href="{{ url_for('users_get_one', user_id=message.account_id) }}"> {{ message.author }}</a> @ {{ message.date_created.strftime('%d.%m.%Y %-H:%M')}} &nbsp;--&nbsp; message {{ loop.index }}/{{ loop.length }}</small>
       
         <p style="white-space: pre-line;">{{ message.content }}</p>
 
+        <div><small>
+        Replies:
+        {% for reply in replies %}
+        {% if reply.reply_id == message.id %}
+        <div style="padding-left: 0.5em">
+          <a href="/topics/{{ topic.id }}/messages/{{ reply.id }}/">{{ reply.content|truncate(96) }}</a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </small></div>
+      <br />
         <small>
-          <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">See replies or write a reply</a>
+          <a href="/topics/{{ topic.id }}/messages/{{ message.id }}/">View all replies or answer</a>
         </small>
 
         {% if message.account_id == current_user.id %}
@@ -35,6 +47,7 @@
         <hr>      
       </div>
     </div>
+    {% endif %}
     {% endfor %}
   {% else %}
   <div>
