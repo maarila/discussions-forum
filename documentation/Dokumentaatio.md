@@ -89,12 +89,13 @@ CREATE TABLE views (
 
 ```
 INSERT INTO Account (name, username, password, admin) 
-VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0 tai 1);`
+VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);`
 ```
 - [x] Käyttäjänä voin kirjautua keskustelualustalle.
 
 ```
-SELECT * FROM Account WHERE Account.name = kirjautuvan_käyttäjän_nimi 
+SELECT * FROM Account 
+WHERE Account.name = kirjautuvan_käyttäjän_nimi 
 AND Account.password = kirjautuvan_käyttäjän_salasana;`
 ```
 
@@ -116,7 +117,8 @@ vastattavan_viestin_id, kirjoittajan_id);
 - [x] Käyttäjänä voin muokata lähettämiäni viestejä.
 
 ```
-UPDATE Message SET content="uusi viesti" 
+UPDATE Message 
+SET content="uusi viesti" 
 WHERE Message.id=muokattavan_viestin_id;
 ```
 
@@ -127,7 +129,8 @@ WHERE Message.id=muokattavan_viestin_id;
 - [x] Käyttäjänä voin lukea minkä tahansa viestin mistä tahansa aihealueesta.
 
 ```
-SELECT * FROM Message WHERE Topic.id = halutun_viestin_topic_id
+SELECT * FROM Message 
+WHERE Topic.id = halutun_viestin_topic_id
 AND Message.id = halutun_viestin_id;
 ```
 
@@ -154,14 +157,16 @@ LIMIT 5;
 Haku aihealueen nimestä:
 
 ```
-SELECT * FROM Topic WHERE Topic.title LIKE "%hakusana%"
+SELECT * FROM Topic 
+WHERE Topic.title LIKE "%hakusana%"
 ORDER BY Topic.date_created DESC;
 ```
 
 Haku kirjoittajan nimestä tai viestin sisällöstä:
 
 ```
-SELECT * FROM Message WHERE Message.author LIKE "%hakusana%"
+SELECT * FROM Message 
+WHERE Message.author LIKE "%hakusana%"
 OR Message.content LIKE "%hakusana%"
 ORDER BY Message.date_created DESC;
 ```
@@ -235,7 +240,8 @@ VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);
 - [x] Ylläpitäjänä voin muokata aihealueita.
 
 ```
-UPDATE Topic SET title="uusi aihealueen nimi" 
+UPDATE Topic 
+SET title="uusi aihealueen nimi" 
 WHERE Topic.id=muokattavan_aihealueen_id;
 ```
 
@@ -260,7 +266,8 @@ Jos samassa yhteydessä poistaa myös aihealueeseen kuuluneet viestit, niin enne
 Kolmeen edelliseen kohtaan:
 
 ```
-UPDATE Account SET admin=joko_nolla_tai_yksi
+UPDATE Account 
+SET admin=joko_nolla_tai_yksi
 WHERE Account.id = muokattavan_käyttäjän_id;
 ```
 
@@ -270,17 +277,17 @@ WHERE Account.id = muokattavan_käyttäjän_id;
 
 Sovelluksen etusivulla näkyvät viisi viimeisintä keskustelun aihetta uusimmasta vanhimpaan. Valitse ylävalikon oikeasta yläkulmasta _Register_ ja kirjaudu järjestelmään haluamallasi nimellä, käyttäjätunnuksella ja salasanalla. Nimessä on oltava 4-48 merkkiä, käyttäjätunnuksessa 4-24 merkkiä ja salasanassa 6-255 merkkiä. Valitse tämän jälken _Login_ ja kirjaudu sovellukseen luomillasi tunnuksilla.
 
-Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien viestien listauksen kautta tai kaikki viestit listaamalla. Aihealueen avattuasi voit kirjoittaa aihealueeseen uuden vastineen tai selata muihin vastineisiin tulleita viestien perässä olevien _Replies_-listauksen tai _View all replies_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies_. Omien vastaustesi perästä löydät *Edit*-napin, jolla voit muokata kirjoittamiasi viestejä.
+Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien viestien listauksen kautta tai kaikki viestit listaamalla. Aihealueen avattuasi voit kirjoittaa aihealueeseen uuden vastineen tai selata muihin vastineisiin tulleita vastauksia viestien perässä olevien _Replies_-listauksen tai _View all replies or answer_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies or answer_. Omien vastaustesi perästä löydät *Edit*-napin, jolla voit muokata kirjoittamiasi viestejä.
 
-Viestin lopusta näet myös käyttäjät, jotka ovat viestin jo lukeneet.
+Viestin lopusta näet myös käyttäjät, jotka ovat kunkin viestin jo lukeneet.
 
-Sivuston ylävalikon _Search_-toiminnon valitsemalla voi etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös etsiä viestejä tietyltä ajanjaksolta.
+Sivuston ylävalikon _Search_-toiminnon valitsemalla voi etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös mahdollisuus etsiä viestejä tietyltä ajanjaksolta.
 
 **Pääkäyttäjän ohjeet**
 
-Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta _Login_ ja syötä pääkäyttäjän tunnukset. Mikäli käytät sovellusta Herokussa, syötä  käyttäjätunnukseksi _hello_ sekä salasanaksi _world_. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
+Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta _Login_ ja syötä pääkäyttäjän tunnukset. Herokussa ne ovat siis käyttäjätunnus _hello_ ja salasana _world_. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
 
-Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen pääsivun kautta. Yksittäisiä viestejä puolestaan voi poistaa keskusteluista halutusti. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. _Add user_-toiminnallisuudella voi lisätä uusia käyttäjiä, _Create topic_-toiminnallisuudella voi luoda uusia aihealueita, _Show all messages_-toiminto listaa kaikki viestit ja mahdollistaa niiden poistamisen, _Show all users_ puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
+Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen etusivun kautta. Yksittäisiä viestejä puolestaan voi poistaa keskusteluista halutusti _Delete_-napilla. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. _Add user_ -toiminnallisuudella voi lisätä uusia käyttäjiä, _Create topic_ -toiminnallisuudella voi luoda uusia aihealueita, _Show all messages_ -toiminto listaa kaikki viestit ja mahdollistaa niiden poistamisen, _Show all users_ puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
 
 ### Asennusohje
 
@@ -308,11 +315,11 @@ Tämän jälkeen on asennettava sovelluksen vaatimat riippuvuudet:
 
 `pip install -r requirements.txt`
 
-Nyt sovelluksen voi käynnistää sen juurihakemistosta /keskustelufoorumi/:
+Nyt sovelluksen voi käynnistää sen juurihakemistosta:
 
 `python3 run.py`
 
-Käynnistämisen yhteydessä sovellus luo application-hakemistoon SQLite3-tietokannan messages.db. Ensimmäinen pääkäyttäjäoikeuksilla varustettu käyttäjä on lisättävä suoraan tietokantaan. Avaa uusi terminaali-ikkuna ja siirry jälleen sovelluksen juurihakemistoon. Sen jälkeen:
+Käynnistämisen yhteydessä sovellus luo application-hakemistoon SQLite3-tietokannan messages.db. Ensimmäinen pääkäyttäjäoikeuksilla varustettu käyttäjä on lisättävä suoraan tietokantaan. Avaa uusi terminaali-ikkuna ja siirry jälleen sovelluksen juurihakemistoon. Sen jälkeen kirjoita seuraavat rivit:
 
 ```
 cd application/
@@ -322,7 +329,7 @@ INSERT INTO Account (name, username, password, admin) VALUES ("haluttu nimi", "k
 
 Sovellusta voi nyt käyttää. Avaa haluamallasi selaimella (sovelluksen toimivuus on testattu Google Chromella) osoite http://localhost:5000 ja kirjaudu sovellukseen luomillasi pääkäyttäjätunnuksilla.
 
-Kun haluat lopettaa sovelluksen käytön, mene terminaaliin, jossa käynnistit sovelluksen. Näppäinyhdistelmä Control-C lopettaa sovelluksen suorittamisen. Virtuaaliympäristö suljetaan komennolla `deactivate`.
+Kun haluat lopettaa sovelluksen käytön, mene terminaaliin, jossa käynnistit sovelluksen. Näppäinyhdistelmä Control-C lopettaa sovelluksen suorittamisen. Virtuaaliympäristö venv suljetaan komennolla `deactivate`.
 
 ### Työn ja sovelluksen rajoitteet
 
