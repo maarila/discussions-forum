@@ -2,9 +2,9 @@
 
 ### Kirjautuminen Herokuun
 
-Pääkäyttäjän tunnus: _hello_, salasana: _world_
+Pääkäyttäjän tunnus: _admin_, salasana: _secret_
 
-Normaalikäyttäjän tunnus: _gandalf_, salasana: _klonkku_
+Normaalikäyttäjän tunnus: _maija_, salasana: _meikalainen_
 
 ### Tietokantakaavio
 
@@ -135,6 +135,23 @@ AND Message.id = halutun_viestin_id;
 ```
 
 - [x] Käyttäjänä voin nähdä, ketkä kaikki ovat lukeneet minkä tahansa viestin.
+
+Tallennus (SQLite):
+
+```
+INSERT OR IGNORE INTO Views (account_id, message_id)
+VALUES (käyttäjän_id, viestin_id);
+```
+
+Tallennus (PostgreSQL):
+
+```
+INSERT INTO Views (account_id, message_id)
+VALUES (käyttäjän_id, viestin_id)
+ON CONFLICT DO NOTHING;
+```
+
+Haku (kummatkin):
 
 ```
 SELECT Account.name FROM Account
@@ -277,17 +294,17 @@ WHERE Account.id = muokattavan_käyttäjän_id;
 
 Sovelluksen etusivulla näkyvät viisi viimeisintä keskustelun aihetta uusimmasta vanhimpaan. Valitse ylävalikon oikeasta yläkulmasta _Register_ ja kirjaudu järjestelmään haluamallasi nimellä, käyttäjätunnuksella ja salasanalla. Nimessä on oltava 4-48 merkkiä, käyttäjätunnuksessa 4-24 merkkiä ja salasanassa 6-255 merkkiä. Valitse tämän jälken _Login_ ja kirjaudu sovellukseen luomillasi tunnuksilla.
 
-Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien viestien listauksen kautta tai kaikki viestit listaamalla. Aihealueen avattuasi voit kirjoittaa aihealueeseen uuden vastineen tai selata muihin vastineisiin tulleita vastauksia viestien perässä olevien _Replies_-listauksen tai _View all replies or answer_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies or answer_. Omien vastaustesi perästä löydät *Edit*-napin, jolla voit muokata kirjoittamiasi viestejä.
+Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien aihealueiden listauksen kautta tai kaikki aihealueet listaamalla. Aihealueen avattuasi voit kirjoittaa aiheeseen uuden vastineen, lukea muita vastineita tai selata muihin vastineisiin tulleita vastauksia viestien perässä olevan _Replies_-listauksen tai _View all replies or answer_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies or answer_. Omien vastaustesi perästä löydät _Edit_-napin, jolla voit muokata kirjoittamiasi viestejä.
 
 Viestin lopusta näet myös käyttäjät, jotka ovat kunkin viestin jo lukeneet.
 
-Sivuston ylävalikon _Search_-toiminnon valitsemalla voi etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös mahdollisuus etsiä viestejä tietyltä ajanjaksolta.
+Sivuston ylävalikon _Search_-toiminnon valitsemalla voit etsiä viestejä otsikon, viestin kirjoittajan tai sekä kirjoittajan että viestin sisällön perusteella. Hakusivulla on myös mahdollisuus etsiä viestejä tietyltä ajanjaksolta.
 
 **Pääkäyttäjän ohjeet**
 
-Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta _Login_ ja syötä pääkäyttäjän tunnukset. Herokussa ne ovat siis käyttäjätunnus _hello_ ja salasana _world_. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
+Voit myös kirjautua sovellukseen pääkäyttäjän ns. admin-tunnuksilla. Valitse tällöin sivuston ylävalikosta _Login_ ja syötä pääkäyttäjän tunnukset. Herokussa ne ovat siis käyttäjätunnus _admin_ ja salasana _secret_. Pääkäyttäjän tunnuksilla voit käyttää kaikkia samoja toiminnallisuuksia kuin tavallisetkin käyttäjät, mutta niiden lisäksi pääkäyttäjä voi lisätä, muokata ja poistaa aiheita, lisätä ja poistaa käyttäjiä, myöntää muille käyttäjille pääkäyttäjäoikeudet sekä poistaa yksittäisiä viestejä.
 
-Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen etusivun kautta. Yksittäisiä viestejä puolestaan voi poistaa keskusteluista halutusti _Delete_-napilla. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. _Add user_ -toiminnallisuudella voi lisätä uusia käyttäjiä, _Create topic_ -toiminnallisuudella voi luoda uusia aihealueita, _Show all messages_ -toiminto listaa kaikki viestit ja mahdollistaa niiden poistamisen, _Show all users_ puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
+Pääkäyttäjän toiminnallisuuksista aihealueiden muokkaaminen ja poistaminen tapahtuu sovelluksen etusivun kautta. Yksittäisiä viestejä puolestaan voi poistaa keskusteluista halutusti _Delete_-napilla tai kaikki viestit listaavan _Show all messages_ -toiminnon kautta. Muut toiminnallisuudet ovat tarjolla sivuston ylävalikossa. _Add user_ -toiminnallisuudella voi lisätä uusia käyttäjiä, _Create topic_ -toiminnallisuudella voi luoda uusia aihealueita, _Show all messages_ -toiminto listaa siis kaikki viestit ja mahdollistaa niiden poistamisen, _Show all users_ puolestaan listaa kaikki järjestelmän käyttäjät, mahdollistaa näiden poistamisen sekä antaa mahdollisuuden lisätä käyttäjälle pääkäyttäjän oikeudet tai poistaa ne.
 
 ### Asennusohje
 
@@ -297,7 +314,7 @@ Avaa terminaali ja siirry hakemistoon, johon haluat asentaa sovelluksen. Lataa s
 
 Siirry sovelluksen hakemistoon:
 
-`cd keskustelufoorumi/
+`cd keskustelufoorumi/`
 
 Koska kyseessä on Python3-ohjelmisto, sovelluksen kloonaamisen jälkeen on asennettava sen tarvitsema virtuaaliympäristö:
 
@@ -325,6 +342,7 @@ Käynnistämisen yhteydessä sovellus luo application-hakemistoon SQLite3-tietok
 cd application/
 sqlite3 messages.db
 INSERT INTO Account (name, username, password, admin) VALUES ("haluttu nimi", "käyttäjätunnus", "salasana", 1);
+.quit
 ```
 
 Sovellusta voi nyt käyttää. Avaa haluamallasi selaimella (sovelluksen toimivuus on testattu Google Chromella) osoite http://localhost:5000 ja kirjaudu sovellukseen luomillasi pääkäyttäjätunnuksilla.
@@ -333,15 +351,15 @@ Kun haluat lopettaa sovelluksen käytön, mene terminaaliin, jossa käynnistit s
 
 ### Työn ja sovelluksen rajoitteet
 
-Sovelluksessa on käytössä paikallisesti tietokannanhallintajärjestelmänä SQLite ja Herokussa puolestaan PostgreSQL. Tästä seurasi muutamia ongelmia hakujen luomisen suhteen tapauksissa, joissa SQLite-haku ei ollut yhteensopiva PostgreSQL:n vaatiman muotoilun suhteen. Useimmissa tapauksissa yhteensovittaminen oli vaivatonta ottamalla suoraan yhteys Herokun PostgreSQL-tietokantaan ja muokkaamalla haku kuntoon sekä sen jälkeen erottamalla paikallinen kehitysympäristö tuotantoympäristöstä koodissa. Yhden yhteenvetokyselyn kohdalla (ks. ylempänä Käyttötapaukset ja "uusimmat viisi viestiä viidessä eri aihealueessa") ongelmaksi kuitenkin muodostui saatujen tulosten muokkaaminen ja niiden debuggaaminen toimintakuntoon. Erillisen tietokannanhallintajärjestelmän vuoksi debuggaamista joutui tekemään git pushin välityksellä, mikä oli hidasta ja vaivalloista, joten lopulta päädyin jättämään  ominaisuuden tyystin pois. (Lokaalisti ominaisuus toimii, ja sen voi ottaa käyttöön poistamalla relevantit kommentit templates/topics-kansion listausnäkymistä).
+Sovelluksessa on käytössä paikallisesti tietokannanhallintajärjestelmänä SQLite ja Herokussa puolestaan PostgreSQL. Tästä seurasi muutamia ongelmia hakujen luomisen suhteen tapauksissa, joissa SQLite-haku ei ollut yhteensopiva PostgreSQL:n vaatiman muotoilun suhteen. Useimmissa tapauksissa yhteensovittaminen oli vaivatonta ottamalla suoraan yhteys Herokun PostgreSQL-tietokantaan ja muokkaamalla haku kuntoon sekä sen jälkeen erottamalla paikallinen kehitysympäristö tuotantoympäristöstä koodissa. Yhden yhteenvetokyselyn kohdalla (ks. ylempänä Käyttötapaukset ja "uusimmat viisi viestiä viidessä eri aihealueessa") ongelmaksi kuitenkin muodostui saatujen tulosten muokkaaminen ja niiden debuggaaminen toimintakuntoon. Erillisen tietokannanhallintajärjestelmän vuoksi debuggaamisen joutui tekemään git pushin välityksellä, mikä oli hidasta ja vaivalloista, joten lopulta päädyin jättämään  ominaisuuden tyystin pois. (Lokaalisti ominaisuus toimii, ja sen voi ottaa käyttöön poistamalla kommentit templates/topics-kansion listausnäkymistä).
 
 Sovelluksessa on myöskin sivujen siirtymät, tai referralit, kunnossa vain paikoitellen. Esimerkiksi kirjautumisen jälkeen siirrytään aina etusivulle, eikä sille aihealuesivulle, josta kirjautumiskutsu tuli.
 
-Sovellukseen olisi voinut ottaa käyttöön käyttäjätilin jäädyttämisen, eli bannaamisen. Nyt käyttäjän poistaminen poistaa myös kaikki käyttäjän kirjoittamat viestit. Niihin kirjoitetut vastaukset (ja niihin mahdollisesti kirjoitetut vastaukset jne.) puolestaan jäävät tietokantalimboon. 
-
-Sama pätee sellaisten viestien poistamiseen, joille on vastauksia ja vastausten vastauksia jne. Limboviestit näkyvät Show all messages -listauksessa, mutta avausyritys aiheuttaa virheilmoituksen.
+Sovellukseen olisi voinut ottaa käyttöön käyttäjätilin jäädyttämisen, eli bannaamisen. Nyt käyttäjän poistaminen poistaa myös kaikki käyttäjän kirjoittamat viestit sekä niihin kirjoitetut vastaukset (ja niihin mahdollisesti kirjoitetut vastaukset jne.). Sama poistamisen armottomuus pätee myös viestien ja aihealueiden poistamiseen. Toisaalta samankaltainen järjestelmä on käytössä mm. Facebookissa paikoitellen...
 
 Viestien ja aihealueiden muokkaaminen ei käy ilmi sovelluksessa tällä hetkellä millään lailla, vaikka tietokanta tukisi date_modified-ominaisuutta.
+
+Sovelluksella ja Herokulla on jonkinlainen yhteensopivuusongelma. Aina aika ajoin sovellus palauttaa virheen "Internal Server Error", joskus kaksikin kertaa peräjälkeen, mutta refresh korjaa tilanteen. Olen ollut havaitsevinani, että virheen todennäköisyys on suurin silloin, kun sovellus juuri "herää" Herokun päässä, mutta tarkempaa selvitystä en ole tehnyt.
 
 Tietokanta on normalisoitu.
 
@@ -356,8 +374,8 @@ Tietokannassa käyttäjä-, aihealue- ja viestitauluilla on sarake "date_modifie
 
 ### Omat kokemukset
 
-Valitsin esimerkkiaiheista kiinnostavalta ja selkeältä tuntuneen keskustelufoorumin. En muokannut määrittelytekstiä juurikaan, jolloin siihen jäi myös lause "lukija voi seurata vastinepolkua" kirjoitusten lukemisen suhteen. Näin jälkiviisaana voin todeta, että kyseisen lauseen poisjättäminen tai sen muokkaaminen olisi ollut järkevä ratkaisu, koska kyseisen ominaisuuden toteuttaminen määritti sovelluksen toiminnallisuutta ja viestien esittämistä sekä käsittelyä lopulta kohtuuttoman paljon. Toiminnallisuuden aiheuttamien ongelmakohtien setviminen jäikin vielä työssä kesken, kuten "Työn ja sovelluksen rajoitteet" -kohdasta voi lukea.
+Valitsin esimerkkiaiheista kiinnostavalta ja selkeältä tuntuneen keskustelufoorumin. En muokannut määrittelytekstiä juurikaan, koska määrittely tuntui mielestäni järkevältä, jolloin siihen jäi myös lause "lukija voi seurata vastinepolkua" kirjoitusten lukemisen suhteen. Näin jälkiviisaana on helppo todeta, että kyseisen lauseen poisjättäminen tai sen muokkaaminen olisi ollut hyvä ratkaisu, koska kyseisen ominaisuuden toteuttaminen määritti sovelluksen toiminnallisuutta ja viestien esittämistä sekä käsittelyä lopulta kohtuuttoman paljon.
 
-Ehkä olisi täytynyt täytynyt sivuston rakenne tehdä sittenkin yksi-yhteen PostgreSQL-sivuston yhteisön postituslistojen ja käyttää pelkästään yhden viestin näyttöä, ja sen jatkeena sitten "In response to"- ja "Responses" -selausmahdollisuuksia.
+Kenties ratkaisu olisi voinut olla, jos sivuston rakenteen olisi tehnyt esimerkiksi PostgreSQL-sivuston yhteisön postituslistojen mukaan. Tällöin olisin voinut käyttää pelkästään yhden viestin näyttämistä kerrallaan ja sen jatkeena "In response to"- ja "Responses" -selausmahdollisuuksia.
 
-Muutenkin olisi ollut ehdottomasti järkevää käyttää paikallisessa kehitysympäristössä samaa tietokannanhallintajärjestelmää kuin tuotantoympäristössä, eli PostgreSQL:ää. Seurasin kurssin viikkoja vähän turhankin orjallisesti, mikä johti siihen, että tein sekä turhaa työtä että vääränlaista työtä. Jälkiviisautta tämäkin, mutta olisi pitänyt pitää fokus selvästi alusta asti vain omassa työssä, eikä jäljitellä viikkojen esimerkkitapauksia kuin silloin kun on tarpeen.
+Viimeisenä huomiona olisi ollut _ehdottomasti_ järkevää käyttää paikallisessa kehitysympäristössä samaa tietokannanhallintajärjestelmää kuin tuotantoympäristössä, eli PostgreSQL:ää. SQLiten käyttäminen lokaalisti oli vain häiriöksi. Seurasin myös kurssin viikkoja ehkä vähän turhankin orjallisesti, mikä johti siihen, että tein sekä turhaa työtä että vääränlaista työtä. Jälkiviisautta tämäkin, mutta olisi pitänyt pitää fokus selvästi alusta asti vain omassa työssä, eikä jäljitellä viikkojen esimerkkitapauksia kuin silloin kun on tarpeen.
