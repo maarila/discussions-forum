@@ -44,14 +44,7 @@ class Message(Base):
 
         res = db.engine.execute(stmt)
 
-        response = []
-
-        for row in res:
-            response.append({"id": row[0], "date_created": datetime.strptime(
-                row[1], '%Y-%m-%d %H:%M:%S').strftime('%d.%m.%Y %-H:%M'),
-                "author": row[3], "content": row[4], "topic_id": row[7]})
-
-        return response
+        return res
 
     @staticmethod
     def find_all(search_term):
