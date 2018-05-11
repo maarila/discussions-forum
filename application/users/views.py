@@ -5,6 +5,7 @@ from application import app, db
 from application.auth.models import User
 from application.messages.models import Message
 from application.topics.models import Topic
+from application.service.methods import delete_message
 
 
 @app.route("/users/", methods=["GET"])
@@ -29,7 +30,7 @@ def users_toggle_admin(user_id):
 
     if current_user.admin and current_user.id != u.id:
         u.admin = not u.admin
-        db.session().commit()
+        db.session.commit()
 
     return redirect(url_for("users_index"))
 
@@ -37,11 +38,15 @@ def users_toggle_admin(user_id):
 @app.route("/users/<user_id>/delete/", methods=["POST"])
 @login_required
 def users_delete(user_id):
-    Message.query.filter_by(account_id=user_id).delete()
+    users_messages = Message.query.filter_by(account_id=user_id)
+
+    for msg in users_messages:
+        delete_message(msg)
+
     u = User.query.get(user_id)
 
     if current_user.admin and current_user.id != u.id:
         db.session.delete(u)
-        db.session().commit()
+        db.session.commit()
 
     return redirect(url_for("users_index"))

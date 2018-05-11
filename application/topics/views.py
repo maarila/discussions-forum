@@ -116,11 +116,14 @@ def topics_edit(topic_id):
 @app.route("/topics/<topic_id>/delete/", methods=["POST"])
 @login_required
 def topics_delete(topic_id):
+    topic = Topic.query.get(topic_id)
 
     if current_user.admin:
-        Message.query.filter_by(topic_id=topic_id).delete()
-        Topic.query.filter_by(id=topic_id).delete()
-        db.session().commit()
+        messages_in_topic = Message.query.filter_by(topic_id=topic_id).all()
+        for message in messages_in_topic:
+            delete_message(message)
+        db.session.delete(topic)
+        db.session.commit()
 
     return redirect("/")
 
@@ -137,7 +140,7 @@ def topics_create():
     t.creator = current_user.name
 
     if current_user.admin:
-        db.session().add(t)
-        db.session().commit()
+        db.session.add(t)
+        db.session.commit()
 
     return redirect(url_for("topics_index"))
