@@ -339,8 +339,11 @@ Nyt sovelluksen voi käynnistää sen juurihakemistosta:
 Käynnistämisen yhteydessä sovellus luo application-hakemistoon SQLite3-tietokannan messages.db. Ensimmäinen pääkäyttäjäoikeuksilla varustettu käyttäjä on lisättävä suoraan tietokantaan. Avaa uusi terminaali-ikkuna ja siirry jälleen sovelluksen juurihakemistoon. Sen jälkeen kirjoita seuraavat rivit:
 
 `cd application/`
+
 `sqlite3 messages.db`
+
 `INSERT INTO Account (name, username, password, admin) VALUES ("haluttu nimi", "käyttäjätunnus", "salasana", 1);`
+
 `.quit`
 
 Sovellusta voi nyt käyttää. Avaa haluamallasi selaimella (sovelluksen toimivuus on testattu Google Chromella) osoite http://localhost:5000 ja kirjaudu sovellukseen luomillasi pääkäyttäjätunnuksilla.
