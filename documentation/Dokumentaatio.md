@@ -89,21 +89,21 @@ CREATE TABLE views (
 
 ```
 INSERT INTO Account (name, username, password, admin) 
-VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);`
+VALUES ("Etunimi Sukunimi", "tunnus", "salasana", 0);
 ```
 - [x] Käyttäjänä voin kirjautua keskustelualustalle.
 
 ```
 SELECT * FROM Account 
 WHERE Account.name = kirjautuvan_käyttäjän_nimi 
-AND Account.password = kirjautuvan_käyttäjän_salasana;`
+AND Account.password = kirjautuvan_käyttäjän_salasana;
 ```
 
 - [x] Käyttäjänä voin lisätä aihealueelle viestin.
 
 ```
 INSERT INTO Message (author, content, topic_id, account_id) 
-VALUES ("kirjoittajan nimi", "viestin sisältö", aihealueen_id, kirjoittajan_id);`
+VALUES ("kirjoittajan nimi", "viestin sisältö", aihealueen_id, kirjoittajan_id);
 ```
 
 - [x] Käyttäjänä voin vastata aihealueella olevaan viestiin.
@@ -161,7 +161,7 @@ WHERE Account.id = Views.account_id;
 
 - [x] Käyttäjänä voin selailla viestejä aihealueen, kirjoittajan tai viestin iän perusteella.
 
-Viisi suosituinta aihealuetta vastausten määrän perusteella mitattuna:
+Viisi suosituinta aihealuetta vastausten määrän perusteella mitattuna ja niiden vastausmäärät:
 
 ```
 SELECT Topic.id, Topic.title, COUNT(Message.id) as msgs FROM Topic
@@ -294,7 +294,7 @@ WHERE Account.id = muokattavan_käyttäjän_id;
 
 Sovelluksen etusivulla näkyvät viisi viimeisintä keskustelun aihetta uusimmasta vanhimpaan. Valitse ylävalikon oikeasta yläkulmasta _Register_ ja kirjaudu järjestelmään haluamallasi nimellä, käyttäjätunnuksella ja salasanalla. Nimessä on oltava 4-48 merkkiä, käyttäjätunnuksessa 4-24 merkkiä ja salasanassa 6-255 merkkiä. Valitse tämän jälken _Login_ ja kirjaudu sovellukseen luomillasi tunnuksilla.
 
-Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien aihealueiden listauksen kautta tai kaikki aihealueet listaamalla. Aihealueen avattuasi voit kirjoittaa aiheeseen uuden vastineen, lukea muita vastineita tai selata muihin vastineisiin tulleita vastauksia viestien perässä olevan _Replies_-listauksen tai _View all replies or answer_-toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies or answer_. Omien vastaustesi perästä löydät _Edit_-napin, jolla voit muokata kirjoittamiasi viestejä.
+Voit nyt selata viestejä pääsivulla aihealueittain joko uusimpien tai suosituimpien aihealueiden listauksen kautta tai kaikki aihealueet listaamalla. Aihealueen avattuasi voit kirjoittaa aiheeseen uuden vastineen, lukea muita vastineita tai selata muihin vastineisiin tulleita vastauksia viestien perässä olevan _Replies_-listauksen tai _View all replies or answer_ -toiminnon kautta. Mikäli haluat vastata johonkin tiettyyn vastineeseen, valitse tällöinkin _View all replies or answer_. Omien vastaustesi perästä löydät _Edit_-napin, jolla voit muokata kirjoittamiasi viestejä.
 
 Viestin lopusta näet myös käyttäjät, jotka ovat kunkin viestin jo lukeneet.
 
@@ -338,12 +338,10 @@ Nyt sovelluksen voi käynnistää sen juurihakemistosta:
 
 Käynnistämisen yhteydessä sovellus luo application-hakemistoon SQLite3-tietokannan messages.db. Ensimmäinen pääkäyttäjäoikeuksilla varustettu käyttäjä on lisättävä suoraan tietokantaan. Avaa uusi terminaali-ikkuna ja siirry jälleen sovelluksen juurihakemistoon. Sen jälkeen kirjoita seuraavat rivit:
 
-```
-cd application/
-sqlite3 messages.db
-INSERT INTO Account (name, username, password, admin) VALUES ("haluttu nimi", "käyttäjätunnus", "salasana", 1);
-.quit
-```
+`cd application/`
+`sqlite3 messages.db`
+`INSERT INTO Account (name, username, password, admin) VALUES ("haluttu nimi", "käyttäjätunnus", "salasana", 1);`
+`.quit`
 
 Sovellusta voi nyt käyttää. Avaa haluamallasi selaimella (sovelluksen toimivuus on testattu Google Chromella) osoite http://localhost:5000 ja kirjaudu sovellukseen luomillasi pääkäyttäjätunnuksilla.
 
@@ -355,9 +353,9 @@ Sovelluksessa on käytössä paikallisesti tietokannanhallintajärjestelmänä S
 
 Sovelluksessa on myöskin sivujen siirtymät, tai referralit, kunnossa vain paikoitellen. Esimerkiksi kirjautumisen jälkeen siirrytään aina etusivulle, eikä sille aihealuesivulle, josta kirjautumiskutsu tuli.
 
-Sovellukseen olisi voinut ottaa käyttöön käyttäjätilin jäädyttämisen, eli bannaamisen. Nyt käyttäjän poistaminen poistaa myös kaikki käyttäjän kirjoittamat viestit sekä niihin kirjoitetut vastaukset (ja niihin mahdollisesti kirjoitetut vastaukset jne.). Sama poistamisen armottomuus pätee myös viestien ja aihealueiden poistamiseen. Toisaalta samankaltainen järjestelmä on käytössä mm. Facebookissa paikoitellen...
+Sovellukseen olisi voinut ottaa käyttöön käyttäjätilin jäädyttämisen, eli bannaamisen. Nyt käyttäjän poistaminen poistaa myös kaikki käyttäjän kirjoittamat viestit sekä niihin kirjoitetut vastaukset (ja niihin mahdollisesti kirjoitetut vastaukset jne.). Sama poistamisen armottomuus pätee myös viestien ja aihealueiden poistamiseen.
 
-Viestien ja aihealueiden muokkaaminen ei käy ilmi sovelluksessa tällä hetkellä millään lailla, vaikka tietokanta tukisi date_modified-ominaisuutta.
+Viestien ja aihealueiden muokkaaminen ei käy ilmi sovelluksessa tällä hetkellä millään lailla, vaikka tietokanta tukee date_modified-ominaisuutta.
 
 Sovelluksella ja Herokulla on jonkinlainen yhteensopivuusongelma. Aina aika ajoin sovellus palauttaa virheen "Internal Server Error", joskus kaksikin kertaa peräjälkeen, mutta refresh korjaa tilanteen. Olen ollut havaitsevinani, että virheen todennäköisyys on suurin silloin, kun sovellus juuri "herää" Herokun päässä, mutta tarkempaa selvitystä en ole tehnyt.
 
@@ -376,6 +374,6 @@ Tietokannassa käyttäjä-, aihealue- ja viestitauluilla on sarake "date_modifie
 
 Valitsin esimerkkiaiheista kiinnostavalta ja selkeältä tuntuneen keskustelufoorumin. En muokannut määrittelytekstiä juurikaan, koska määrittely tuntui mielestäni järkevältä, jolloin siihen jäi myös lause "lukija voi seurata vastinepolkua" kirjoitusten lukemisen suhteen. Näin jälkiviisaana on helppo todeta, että kyseisen lauseen poisjättäminen tai sen muokkaaminen olisi ollut hyvä ratkaisu, koska kyseisen ominaisuuden toteuttaminen määritti sovelluksen toiminnallisuutta ja viestien esittämistä sekä käsittelyä lopulta kohtuuttoman paljon.
 
-Kenties ratkaisu olisi voinut olla, jos sivuston rakenteen olisi tehnyt esimerkiksi PostgreSQL-sivuston yhteisön postituslistojen mukaan. Tällöin olisin voinut käyttää pelkästään yhden viestin näyttämistä kerrallaan ja sen jatkeena "In response to"- ja "Responses" -selausmahdollisuuksia.
+Kenties ratkaisuna olisi voinut olla se, että sivuston rakenteen olisi tehnyt esimerkiksi PostgreSQL-sivuston yhteisön postituslistojen mukaan. Tällöin olisin voinut käyttää pelkästään yhden viestin näyttämistä kerrallaan ja sen jatkeena "In response to"- ja "Responses" -selausmahdollisuuksia.
 
-Viimeisenä huomiona olisi ollut _ehdottomasti_ järkevää käyttää paikallisessa kehitysympäristössä samaa tietokannanhallintajärjestelmää kuin tuotantoympäristössä, eli PostgreSQL:ää. SQLiten käyttäminen lokaalisti oli vain häiriöksi. Seurasin myös kurssin viikkoja ehkä vähän turhankin orjallisesti, mikä johti siihen, että tein sekä turhaa työtä että vääränlaista työtä. Jälkiviisautta tämäkin, mutta olisi pitänyt pitää fokus selvästi alusta asti vain omassa työssä, eikä jäljitellä viikkojen esimerkkitapauksia kuin silloin kun on tarpeen.
+Viimeisenä huomiona olisi ollut _ehdottomasti_ järkevää käyttää paikallisessa kehitysympäristössä samaa tietokannanhallintajärjestelmää kuin tuotantoympäristössä, eli PostgreSQL:ää. SQLiten käyttäminen lokaalisti oli vain häiriöksi. Seurasin myös kurssin viikkoja ehkä vähän turhankin orjallisesti, mikä johti siihen, että tein jonkin verran sekä turhaa työtä että vääränlaista työtä. Jälkiviisautta tämäkin, mutta olisi pitänyt pitää fokus selvästi alusta asti vain omassa työssä, eikä jäljitellä viikkojen esimerkkitapauksia kuin silloin kun on tarpeen.
