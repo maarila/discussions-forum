@@ -13,7 +13,7 @@
       {% if current_user.id != user.id %}
       <td>
         <form method="POST" action="{{ url_for('users_toggle_admin', user_id=user.id) }}">
-          <input class="btn btn-outline-primary btn-sm" type="submit" value="Grant admin rights" />
+          <input class="btn btn-outline-primary btn-sm" type="submit" value="Toggle admin rights" />
         </form>
       </td>
       <td>

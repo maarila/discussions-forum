@@ -11,6 +11,14 @@
 {% if message.account_id == current_user.id %}
   <a href="/messages/{{ message.id }}/edit" class="btn btn-outline-primary btn-sm" role="button">Edit</a>
 {% endif%}
+
+
+{% if current_user.admin %}
+  <form method="POST" action="{{ url_for('messages_delete_from_topic', topic_id=topic.id, message_id=message.id) }}">
+    <input class="btn btn-outline-danger btn-sm" type="submit" value="Delete" />
+  </form>
+{% endif %}
+
 <div>
   <small>Read by:
   {% for view in message.views %}

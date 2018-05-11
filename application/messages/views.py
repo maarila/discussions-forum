@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from application import app, db
 from application.topics.models import Topic
-from application.topics.views import mark_messages_read
+from application.service.methods import mark_messages_read, delete_message
 from application.messages.models import Message
 from application.messages.forms import MessageForm
 
@@ -58,19 +58,17 @@ def messages_delete(message_id):
     m = Message.query.get(message_id)
 
     if current_user.admin:
-        db.session.delete(m)
-        db.session.commit()
+        delete_message(m)
 
     return redirect(url_for("messages_index"))
 
 @app.route("/topics/<topic_id>/messages/<message_id>/delete/", methods=["POST"])
 @login_required
 def messages_delete_from_topic(topic_id, message_id):
-    m = Message.query.get(message_id)
+    msg = Message.query.get(message_id)
 
     if current_user.admin:
-        db.session.delete(m)
-        db.session.commit()
+        delete_message(msg)
 
     return redirect(url_for("topics_get_one", topic_id=topic_id))
 

@@ -4,9 +4,9 @@ from flask_login import current_user, login_required
 from application import app, db
 from application.topics.models import Topic
 from application.topics.forms import TopicForm
-
 from application.messages.models import Message
 from application.messages.forms import MessageForm
+from application.service.methods import delete_message, delete_topic, mark_messages_read
 
 from sqlalchemy.sql import text
 
@@ -63,7 +63,6 @@ def topics_form():
 def topics_get_one(topic_id, page=1):
     per_page = 5
 
-    
     messages = Message.query.filter_by(topic_id=topic_id, reply_id=None)
     replies = Message.query.filter_by(topic_id=topic_id)
     mark_messages_read(messages)
@@ -142,24 +141,3 @@ def topics_create():
         db.session().commit()
 
     return redirect(url_for("topics_index"))
-
-
-def mark_messages_read(messages):
-    if os.environ.get("HEROKU"):
-        for row in messages:
-            message_id = row.id
-            user_id = current_user.id
-            stmt = text("INSERT INTO views (account_id, message_id)"
-                        " VALUES (:user_id, :message_id)"
-                        " ON CONFLICT DO NOTHING"
-                        ).params(user_id=user_id, message_id=message_id)
-            res = db.engine.execute(stmt)
-    else:
-        for row in messages:
-            message_id = row.id
-            user_id = current_user.id
-
-            stmt = text("INSERT OR IGNORE INTO views (account_id, message_id)"
-                        " VALUES (:user_id, :message_id)"
-                        ).params(user_id=user_id, message_id=message_id)
-            res = db.engine.execute(stmt)

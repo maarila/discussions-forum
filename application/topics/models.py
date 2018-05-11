@@ -2,20 +2,9 @@ from datetime import datetime
 
 from application import db
 from application.models import Base
+from application.service.methods import reduce_msg
 
 from sqlalchemy.sql import text
-
-
-def reduce_msg(message):
-    if len(message) < 35:
-        return message
-
-    new_msg = ""
-    for i in range(32):
-        new_msg += message[i]
-
-    new_msg += "..."
-    return new_msg
 
 
 class Topic(Base):
